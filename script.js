@@ -1,4 +1,3 @@
-// Include Firebase Configuration
 // Firebase configuration and initialization
 const firebaseConfig = {
     apiKey: "AIzaSyAmUH1B1JDgQMHsVML3Fd4unZ8fzAQuq7s",
@@ -14,8 +13,16 @@ const firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   
+  // Authenticate anonymously
+  firebase.auth().signInAnonymously()
+    .then(() => {
+      console.log("Authentication successful");
+    })
+    .catch((error) => {
+      console.error("Authentication error:", error.message);
+    });
+  
   $(document).ready(function () {
-    // Firebase database reference
     const dbRef = firebase.database().ref("ADMIN_MATERIAL");
   
     // Initialize DataTable
@@ -23,13 +30,14 @@ const firebaseConfig = {
       responsive: true,
       autoWidth: false,
       columns: [
-        { title: "ID" },
+        { title: "CodMat" },
         { title: "Descripcion" },
-        { title: "Cuadrilla" },
-        { title: "FechaReg" },
-        { title: "CantidadReg" },
-        { title: "Extra" },
         { title: "UM" },
+        { title: "CantidadActual" },
+        // { title: "FechaReg" },
+        // { title: "CantidadReg" },
+        // { title: "Extra" },
+        
       ],
       language: {
         search: "Buscar:",
@@ -44,37 +52,34 @@ const firebaseConfig = {
       },
     });
   
-    // Fetch and populate data from Firebase
+    // Fetch data from Firebase
     dbRef.on("value", (snapshot) => {
       const data = snapshot.val();
-      console.log("Fetched data:", data); // Debug: Check fetched data
-      table.clear(); // Clear existing rows
+      console.log("Fetched data:", data);
+      table.clear();
   
       if (data) {
-        // Loop through keys (e.g., "3") and add rows to the DataTable
         Object.keys(data).forEach((key) => {
           const item = data[key];
           table.row.add([
             item.ID || "N/A",
             item.Descripcion || "N/A",
-            item.Cuadrilla || "N/A",
-            item.FechaReg || "N/A",
-            item.CantidadReg || "0",
-            item.Extra || "0",
             item.UM || "N/A",
+            item.CantidadActual || "N/A",
+            // item.FechaReg || "N/A",
+            // item.CantidadReg || "0",
+            // item.Extra || "0",
+           
           ]);
         });
       } else {
-        console.warn("No data found in Firebase for ADMIN_MATERIAL");
+        console.warn("No data found in ADMIN_MATERIAL");
       }
   
-      table.draw(); // Redraw the DataTable
+      table.draw();
+    }, (error) => {
+      console.error("Database read error:", error.message);
     });
-
-  
-  
-
-  
   
     // Handle video hover play/pause
     const allVideos = document.querySelectorAll(".video");
@@ -113,6 +118,71 @@ const firebaseConfig = {
       $(".video-p-title").text(title);
       $(".video-p-name").text(person);
       $(".video-detail .author-img").attr("src", img);
+    });
+  });
+  $(document).ready(function () {
+    // Handle sidebar clicks for Almacen and Salidas Mat
+    $(".sidebar-link").click(function () {
+      $(".sidebar-link").removeClass("is-active");
+      $(this).addClass("is-active");
+      $(".main-container").hide(); // Hide all main containers
+  
+      if ($(this).hasClass("almacen")) {
+        $(".almacen-container").show(); // Show Almacen content
+      } else if ($(this).hasClass("salidas-mat")) {
+        $(".salidas-mat-container").show(); // Show Salidas Mat content
+      }
+    });
+  
+    // Initialize Salidas Mat DataTable
+    const dbRefSalidas = firebase.database().ref("Cuadrilla_Material");
+    const tableSalidas = $("#salidasMatTable").DataTable({
+      responsive: true,
+      autoWidth: false,
+      columns: [
+        { title: "CodMat" },
+        { title: "CantidadRecib" },
+        { title: "FechaRecib" },
+        { title: "CuadrillaName" },
+        { title: "FolioRecep" },
+        //{ title: "Unidad" },
+      ],
+      language: {
+        search: "Buscar:",
+        lengthMenu: "Mostrar _MENU_ registros",
+        info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+        paginate: {
+          first: "Primero",
+          last: "Último",
+          next: "Siguiente",
+          previous: "Anterior",
+        },
+      },
+    });
+  
+    // Fetch data from Firebase for Salidas Mat
+    dbRefSalidas.on("value", (snapshot) => {
+      const data = snapshot.val();
+      console.log("Fetched Salidas Mat data:", data);
+      tableSalidas.clear();
+  
+      if (data) {
+        Object.keys(data).forEach((key) => {
+          const item = data[key];
+          tableSalidas.row.add([
+            item.codigo_recib || "N/A",
+            item.CantidadRecib || "N/A",
+            item.FechaRecib || "N/A",
+            item.CuadrillaName || "N/A",
+            item.folio_recep || "0",
+           // item.Unidad || "N/A",
+          ]);
+        });
+      } else {
+        console.warn("No data found in SALIDAS_MATERIAL");
+      }
+  
+      tableSalidas.draw();
     });
   });
   
