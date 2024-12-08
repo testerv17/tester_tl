@@ -26,8 +26,8 @@ img {
 body {
   font-family: var(--body-font);
   color: var(--body-color);
-  background-image: url("https://images.unsplash.com/photo-1445251836269-d158eaa028a6?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1951&q=80");
-  background-image: url(https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80);
+  background-image: url("port2.jpg");
+  background-image: url(port2.jpg);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1112,7 +1112,7 @@ button.vjs-play-control.vjs-control.vjs-button {
 .almacen-container {
   padding: 30px;
   background-color: var(--theme-bg);
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 
 #almacenTable {
@@ -1123,6 +1123,21 @@ button.vjs-play-control.vjs-control.vjs-button {
 }
 
 #almacenTable th, #almacenTable td {
+  text-align: left;
+  padding: 10px;
+}
+.salidas-mat-container {
+  padding: 30px;
+  background-color: var(--theme-bg);
+  border-radius: 20px;
+}
+#salidasMatTable {
+  width: 100%;
+  background-color: var(--video-bg);
+  border-radius: 10px;
+  color: #fff;
+}
+#salidasMatTable th, #salidasMatTable td {
   text-align: left;
   padding: 10px;
 }
