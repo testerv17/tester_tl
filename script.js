@@ -14,10 +14,6 @@ const firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   
-  // Initialize Firebase Analytics (optional)
-  firebase.analytics();
-  
-  // DataTable for Almacen Tab
   $(document).ready(function () {
     // Firebase database reference
     const dbRef = firebase.database().ref("ADMIN_MATERIAL");
@@ -48,12 +44,15 @@ const firebaseConfig = {
       },
     });
   
-    // Listen for changes in Firebase Realtime Database
+    // Fetch and populate data from Firebase
     dbRef.on("value", (snapshot) => {
       const data = snapshot.val();
-      table.clear();
+      console.log("Fetched data:", data); // Debug: Check fetched data
+      table.clear(); // Clear existing rows
+  
       if (data) {
-        for (let key in data) {
+        // Loop through keys (e.g., "3") and add rows to the DataTable
+        Object.keys(data).forEach((key) => {
           const item = data[key];
           table.row.add([
             item.ID || "N/A",
@@ -64,10 +63,16 @@ const firebaseConfig = {
             item.Extra || "0",
             item.UM || "N/A",
           ]);
-        }
+        });
+      } else {
+        console.warn("No data found in Firebase for ADMIN_MATERIAL");
       }
-      table.draw();
+  
+      table.draw(); // Redraw the DataTable
     });
+
+  
+  
 
   
   
