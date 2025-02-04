@@ -3182,7 +3182,8 @@ $("#toggleViewSwitch").change(function () {
         if (data) {
           Object.keys(data).forEach((key) => {
             const item = data[key];
-            const folio = item.folio;
+            //cambio ver
+            const folio = item.folioReporte;
             const imageUrl = item.image_url;
             const rawTimestamp = item.timestamp;
             const timestamp = formatTimestamp(rawTimestamp); // Format the timestamp
