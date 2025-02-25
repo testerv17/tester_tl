@@ -2285,6 +2285,22 @@ button.vjs-play-control.vjs-control.vjs-button {
 </a>
 
 
+<a class="sidebar-link monitor-cuadrillas" href="#" onclick="openTab('monitor-cuadrillas')">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 3H21V21H3V3Z" stroke="white" stroke-width="2"/>
+  </svg>
+  Monitor Cuadrillas
+</a>
+
+<a class="sidebar-link monitor-censo" href="#" onclick="openTab('monitor-censo')">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 3H21V21H3V3Z" stroke="white" stroke-width="2"/>
+  </svg>
+  Monitor Censo
+</a>
+
+
+
 
 
     
@@ -2429,9 +2445,13 @@ button.vjs-play-control.vjs-control.vjs-button {
     </div>
     
     
-    
+     
+  
+  
     
     <div class="main-header anim" style="--delay: 0s"><img class="user-img" src="tt.png" alt="">Campo Reporte</div>
+    
+    
     
     <!-- <div id="layer-controls">
       <label><input type="checkbox" class="layer-toggle" data-layer="cto1"> CTO 1</label><br>
@@ -2460,8 +2480,13 @@ button.vjs-play-control.vjs-control.vjs-button {
     </table>
   </div>
 
-
+  <div id="monitor-cuadrillas" class="tab-content" style="display: none;">
+    <iframe src="index_mt.html" id="monitorCuadrillasFrame" width="100%" height="800px" style="border:none;"></iframe>
+  </div>
    
+  <div id="monitor-censo" class="tab-content" style="display: none;">
+    <iframe src="index_censort.html" id="monitorCensoFrame" width="100%" height="800px" style="border:none;"></iframe>
+  </div>
   
   
    <div class="stream-area">
@@ -2496,6 +2521,45 @@ button.vjs-play-control.vjs-control.vjs-button {
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <!-- <script src="./script.js"></script>
 <script src="./scriptv3.js"></script>  -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      let monitorCuadrillasLink = document.querySelector('.sidebar-link.monitor-cuadrillas');
+      if (monitorCuadrillasLink) {
+          monitorCuadrillasLink.addEventListener('click', function() {
+              openTab('monitor-cuadrillas');
+          });
+      }
+  });
+
+  function openTab(tabId) {
+      let tab = document.getElementById(tabId);
+      if (!tab) {
+          console.error(`Tab ${tabId} not found!`);
+          return;
+      }
+
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(tab => {
+          tab.style.display = 'none';
+      });
+
+      // Show the selected tab
+      tab.style.display = 'block';
+  }
+</script>
+
+<script>
+  function openTab(tabId) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(tab => {
+          tab.style.display = 'none';
+      });
+
+      // Show the selected tab
+      document.getElementById(tabId).style.display = 'block';
+  }
+</script>
+
 
  <script>
   // Load Evidencias functionality from v3
@@ -3182,7 +3246,6 @@ $("#toggleViewSwitch").change(function () {
         if (data) {
           Object.keys(data).forEach((key) => {
             const item = data[key];
-            //cambio ver
             const folio = item.folio;
             const imageUrl = item.image_url;
             const rawTimestamp = item.timestamp;
