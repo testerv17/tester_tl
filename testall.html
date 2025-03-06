@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>TecnoluminusCampo</title>
+  <title>Skateboard Video Platform</title>
   <!-- Normalize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
@@ -1837,10 +1837,11 @@ button.vjs-play-control.vjs-control.vjs-button {
 }
 
 .map-container {
-  height: 700px;
+  height: 600px; /* Fixed height */
+  width: 100%; /* Full width */
   margin-bottom: 20px;
-  background-color: #1b2539;
   border-radius: 8px;
+  background-color: #1b2539; /* Optional: background color */
 }
 
 @media (max-width: 768px) {
@@ -2250,6 +2251,102 @@ button.vjs-play-control.vjs-control.vjs-button {
   transform: translateX(40px);
 }
 
+/* General form container */
+#despachoForm {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    background: #222; /* Dark theme background */
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* Labels */
+#despachoForm label {
+    font-weight: bold;
+    color: white;
+}
+
+/* Select and Input Fields */
+#despachoForm select,
+#despachoForm input {
+    width: 180px;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #333;
+    color: white;
+}
+
+/* Buttons */
+#addMaterial, #dispatchMaterials {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#addMaterial {
+    background: #28a745; /* Green */
+    color: white;
+}
+
+#addMaterial:hover {
+    background: #218838;
+}
+
+#dispatchMaterials {
+    background: #007bff; /* Blue */
+    color: white;
+}
+
+#dispatchMaterials:hover {
+    background: #0056b3;
+}
+
+/* Table Styling */
+#despachoTable {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background: #222;
+    color: white;
+}
+
+#despachoTable th, #despachoTable td {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    text-align: center;
+}
+
+#despachoTable th {
+    background: #333;
+    font-weight: bold;
+}
+
+/* Remove button */
+.remove-btn {
+    background: #dc3545; /* Red */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.remove-btn:hover {
+    background: #c82333;
+}
+#circuitoTable_wrapper {
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  max-width: 100%; /* Ensure it doesn't overflow the container */
+}
+
   </style>
 
 </head>
@@ -2258,26 +2355,34 @@ button.vjs-play-control.vjs-control.vjs-button {
 <div class="container">
  <div class="sidebar">
   <span class="logo">S</span>
-  <a class="logo-expand" href="#">TecnoLuminus</a>
+  <!-- <a class="logo-expand" href="#">TecnoLuminus</a> -->
   <div class="side-wrapper">
    <div class="side-title">MENU</div>
    <div class="side-menu">
-    <a class="sidebar-link almacen is-active" href="#">
+    <a class="sidebar-link almacen is-active" href="#" onclick="openTab('almacen')">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
       </svg>
       Almacen
     </a>
+
+    <a class="sidebar-link despacho-tab" href="#" onclick="openTab('despacho')">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 3H21V21H3V3Z" stroke="white" stroke-width="2"/>
+      </svg>
+      Despacho
+    </a>
+    
     
     <!-- Sidebar Link for Salidas Mat -->
-<a class="sidebar-link salidas-mat" href="#">
+<a class="sidebar-link salidas-mat" href="#" onclick="openTab('salidas-mat')">
   <svg viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
   </svg>
   Salidas Mat
 </a>
 
-<a class="sidebar-link streaming-tab" href="#">
+<a class="sidebar-link streaming-tab" href="#" onclick="openTab('streaming')">
   <svg viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
   </svg>
@@ -2317,12 +2422,10 @@ button.vjs-play-control.vjs-control.vjs-button {
  </div>
  <div class="wrapper">
   <div class="header">
-   <div class="search-bar">
-    <input type="text" placeholder="Search">
-   </div>
+   
    <div class="user-settings">
-    <img class="user-img" src="tt.png" alt="">
-    <div class="user-name">TecnoLuminus</div>
+    <!-- <img class="user-img" src="tt.png" alt="">
+    <div class="user-name">TecnoLuminus</div> -->
     <svg viewBox="0 0 492 492" fill="currentColor">
      <path d="M484.13 124.99l-16.11-16.23a26.72 26.72 0 00-19.04-7.86c-7.2 0-13.96 2.79-19.03 7.86L246.1 292.6 62.06 108.55c-5.07-5.06-11.82-7.85-19.03-7.85s-13.97 2.79-19.04 7.85L7.87 124.68a26.94 26.94 0 000 38.06l219.14 219.93c5.06 5.06 11.81 8.63 19.08 8.63h.09c7.2 0 13.96-3.57 19.02-8.63l218.93-219.33A27.18 27.18 0 00492 144.1c0-7.2-2.8-14.06-7.87-19.12z"></path>
     </svg>
@@ -2339,6 +2442,8 @@ button.vjs-play-control.vjs-control.vjs-button {
     <div class="main-header anim" style="--delay: 0s"><img class="user-img" src="tt.png" alt="">Almacen</div>
     <div class="button-container">
       <button id="entregadoButton" class="btn btn-primary">Movimientos</button>
+      
+
     </div>
     
     <div id="entregadoModal" class="modal">
@@ -2399,6 +2504,48 @@ button.vjs-play-control.vjs-control.vjs-button {
     
     
   </div>
+  <!-- <div class="main-container despacho-container" style="display: none;"></div> -->
+  <div id="despacho" class="tab-content" style="display: none;">
+    <div class="main-header">Despacho de Material</div>
+  
+    <form id="despachoForm">
+      <label for="cuadrillaSelect">Selecciona Cuadrilla:</label>
+      <select id="cuadrillaSelect">
+        <option value="">Seleccione...</option>
+        <option value="Cuad1">Cuadrilla 1</option>
+        <option value="Cuad2">Cuadrilla 2</option>
+        <option value="Cuad3">Cuadrilla 3</option>
+      </select>
+  
+      <label for="materialSelect">Selecciona Material:</label>
+      <select id="materialSelect">
+        <option value="">Seleccione...</option>
+        <!-- Materials from Firebase will be loaded here -->
+      </select>
+  
+      <label for="cantidadMaterial">Cantidad:</label>
+      <input type="number" id="cantidadMaterial" min="1">
+  
+      <button type="button" id="addMaterial">Añadir Material</button>
+    </form>
+  
+    <h3>Lista de Materiales a Despachar</h3>
+    <table id="despachoTable">
+      <thead>
+        <tr>
+          <th>Cuadrilla</th>
+          <th>Material</th>
+          <th>Cantidad</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  
+    <button id="dispatchMaterials">Despachar</button>
+  </div>
+  
+  
 
   <div class="main-container salidas-mat-container" style="display: none;">
     <div class="main-header anim" style="--delay: 0s"><img class="user-img" src="tt.png" alt="">Salidas Mat</div>
@@ -2419,66 +2566,118 @@ button.vjs-play-control.vjs-control.vjs-button {
   
   <div class="main-container streaming-container" style="display: none;">
     <div class="button-container">
-      <button id="evidenciasButton" class="btn btn-primary">Evidencias</button>
+      <!-- Button to open combined evidencias -->
+<button id="combinedEvidenciasButton" class="btn btn-primary">Ver Evidencias (Inicial + Final)</button>
     </div>
+
+  <!-- Dispatch Modal -->
+<div id="dispatchModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Despacho de Material</h2>
+
+    <form id="dispatchForm">
+      <label for="dispatchMaterialId">CodMat:</label>
+      <input type="text" id="dispatchMaterialId" readonly>
+
+      <label for="dispatchDescription">Descripción:</label>
+      <input type="text" id="dispatchDescription" readonly>
+
+      <label for="dispatchUM">Unidad de Medida (UM):</label>
+      <input type="text" id="dispatchUM" readonly>
+
+      <label for="dispatchAvailableQty">Stock Actual:</label>
+      <input type="text" id="dispatchAvailableQty" readonly>
+
+      <label for="dispatchCuadrilla">Seleccione Cuadrilla:</label>
+      <select id="dispatchCuadrilla" required>
+        <option value="">Seleccione...</option>
+        <option value="cuadrilla1">Cuadrilla 1</option>
+        <option value="cuadrilla2">Cuadrilla 2</option>
+        <option value="cuadrilla3">Cuadrilla 3</option>
+        <option value="cuadrilla4">Cuadrilla 4</option>
+      </select>
+
+      <label for="dispatchCantidad">Cantidad a Despachar:</label>
+      <input type="number" id="dispatchCantidad" required min="1">
+
+      <button type="submit" class="btn btn-primary">Confirmar Despacho</button>
+    </form>
+  </div>
+</div>
+
     
-    <div id="evidenciasModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Evidencias</h2>
-        <label class="toggle-switch">
-          <input type="checkbox" id="toggleViewSwitch">
-          <span class="toggle-switch-background">
-            <span class="toggle-switch-handle"></span>
-          </span>
-        </label>
-        <div id="gallery" class="gallery-container"></div>
-      </div>
-    </div>
+  <!-- Modal for combined evidencias -->
+<div id="combinedEvidenciasModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Evidencias Inicial & Final</h2>
+    <div id="combinedGallery" class="gallery-container"></div>
+  </div>
+</div>
+
     
     
-    <div id="fullImageModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <img src="" alt="Full-size Image" style="width: 100%; height: auto;" />
-      </div>
-    </div>
-    
-    
+   <!-- Full Image Modal (already in your code) -->
+<div id="fullImageModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <img src="" alt="Full-size" style="width:100%;height:auto;" />
+  </div>
+</div>
+
      
   
   
-    
+
     <div class="main-header anim" style="--delay: 0s"><img class="user-img" src="tt.png" alt="">Campo Reporte</div>
-    
-    
-    
-    <!-- <div id="layer-controls">
-      <label><input type="checkbox" class="layer-toggle" data-layer="cto1"> CTO 1</label><br>
-      <label><input type="checkbox" class="layer-toggle" data-layer="cto2"> CTO 2</label><br>
-      <label><input type="checkbox" class="layer-toggle" data-layer="cto3"> CTO 3</label><br>
-      <label><input type="checkbox" class="layer-toggle" data-layer="cto4"> CTO 4</label><br>
-      <label><input type="checkbox" class="layer-toggle" data-layer="cto5"> CTO 5</label><br>
-    </div> -->
+
+    <div id="map" class="map-container" ></div>
   
-    <div id="map" class="map-container"></div>
-  
-    <table id="circuitoTable" class="display table-striped" style="width:100%">
+    <table id="circuitoTable" class="display table-striped" style="width:100%;">
       <thead>
         <tr>
-          <th>Folio</th>
-          <th>Rpu</th>
-          <th>Lampara</th>
-          <th>Estatus</th>
-          <th>Capacidad</th>
-          <th>Reporte</th>
-         
-          <th>TiempoAtención</th>
+          <th>ID</th>
+          <th>FolioRep</th>
+          <th>FechaCreacion</th>
+          <th>Municipio</th>
+          <th>Origen</th>
+          <th>AsignadoA</th>      
+          <th>Comentarios</th>
+          <th>Acciones</th>
+  
         </tr>
       </thead>
       <tbody></tbody>
     </table>
+   </div>
+
+  <!-- Assign Cuadrilla Modal -->
+<!-- Assign Cuadrilla Modal -->
+<div id="assignCuadrillaModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Asignar Cuadrilla</h2>
+
+    <form id="assignCuadrillaForm">
+      <label for="selectedFolio">Folio Reporte:</label>
+      <input type="text" id="selectedFolio" readonly>
+
+      <label for="assignSelectCuadrilla">Seleccione Cuadrilla:</label>
+      <select id="assignSelectCuadrilla" required>
+        <option value="">Seleccione...</option>
+        <option value="Cuad1">Cuad1</option>
+        <option value="Cuad2">Cuad2</option>
+        <option value="Cuad3">Cuad3</option>
+        <option value="Cuad4">Cuad4</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary">Asignar</button>
+    </form>
   </div>
+</div>
+
+
 
   <div id="monitor-cuadrillas" class="tab-content" style="display: none;">
     <iframe src="index_mt.html" id="monitorCuadrillasFrame" width="100%" height="800px" style="border:none;"></iframe>
@@ -2523,41 +2722,155 @@ button.vjs-play-control.vjs-control.vjs-button {
 <script src="./scriptv3.js"></script>  -->
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-      let monitorCuadrillasLink = document.querySelector('.sidebar-link.monitor-cuadrillas');
-      if (monitorCuadrillasLink) {
-          monitorCuadrillasLink.addEventListener('click', function() {
-              openTab('monitor-cuadrillas');
-          });
-      }
+    // Example: if you want a link to open the "monitor-cuadrillas" tab
+    let monitorCuadrillasLink = document.querySelector('.sidebar-link.monitor-cuadrillas');
+    if (monitorCuadrillasLink) {
+      monitorCuadrillasLink.addEventListener('click', function() {
+        openTab('monitor-cuadrillas'); 
+      });
+    }
   });
 
   function openTab(tabId) {
-      let tab = document.getElementById(tabId);
-      if (!tab) {
-          console.error(`Tab ${tabId} not found!`);
-          return;
-      }
+    console.log("Opening tab:", tabId);
 
-      // Hide all tab contents
-      document.querySelectorAll('.tab-content').forEach(tab => {
-          tab.style.display = 'none';
-      });
+    // 1) Hide all .main-container elements
+    document.querySelectorAll('.main-container').forEach(container => {
+      container.style.display = 'none';
+    });
 
-      // Show the selected tab
-      tab.style.display = 'block';
+    // 2) Remove active class from all sidebar links
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+      link.classList.remove('is-active');
+    });
+
+    // 3) Show the .[tabId]-container (like .streaming-container if tabId="streaming")
+    const tabToShow = document.querySelector(`.${tabId}-container`);
+    if (tabToShow) {
+      tabToShow.style.display = 'block';
+    } else {
+      console.error(`Tab container for ${tabId} not found!`);
+    }
+
+    // 4) Mark the matching link as active, if it exists
+    const activeTabLink = document.querySelector(`.sidebar-link.${tabId}`);
+    if (activeTabLink) {
+      activeTabLink.classList.add('is-active');
+    }
   }
 </script>
 
+
 <script>
-  function openTab(tabId) {
-      // Hide all tab contents
-      document.querySelectorAll('.tab-content').forEach(tab => {
-          tab.style.display = 'none';
+  document.addEventListener("DOMContentLoaded", function () {
+    let materialList = [];
+
+    // Load materials from Firebase
+    const materialSelect = document.getElementById("materialSelect");
+    const dbRef = firebase.database().ref("ADMIN_MATERIAL");
+
+    dbRef.once("value", (snapshot) => {
+      const materials = snapshot.val();
+      for (const key in materials) {
+        let option = document.createElement("option");
+        option.value = key;
+        option.textContent = `${materials[key].Descripcion} (${materials[key].CantidadActual} disponibles)`;
+        materialSelect.appendChild(option);
+      }
+    });
+
+    // Add material to dispatch list
+    document.getElementById("addMaterial").addEventListener("click", function () {
+      const cuadrilla = document.getElementById("cuadrillaSelect").value;
+      const material = document.getElementById("materialSelect").value;
+      const cantidad = document.getElementById("cantidadMaterial").value;
+
+      if (!cuadrilla || !material || cantidad <= 0) {
+        alert("Seleccione cuadrilla, material y cantidad válida.");
+        return;
+      }
+
+      materialList.push({ cuadrilla, material, cantidad });
+
+      updateTable();
+    });
+
+    // Update table with materials to dispatch
+    function updateTable() {
+      const tableBody = document.querySelector("#despachoTable tbody");
+      tableBody.innerHTML = "";
+      materialList.forEach((item, index) => {
+        tableBody.innerHTML += `
+          <tr>
+            <td>${item.cuadrilla}</td>
+            <td>${item.material}</td>
+            <td>${item.cantidad}</td>
+            <td><button class="remove-btn" onclick="removeItem(${index})">Eliminar</button></td>
+          </tr>
+        `;
+      });
+    }
+
+    // Remove item from the list
+    window.removeItem = function (index) {
+      materialList.splice(index, 1);
+      updateTable();
+    };
+
+    // Dispatch materials to Cuadrilla_Material
+    document.getElementById("dispatchMaterials").addEventListener("click", function () {
+      if (materialList.length === 0) {
+        alert("No hay materiales en la lista.");
+        return;
+      }
+
+      const dispatchRef = firebase.database().ref("Cuadrilla_Material");
+
+      materialList.forEach((item) => {
+        dispatchRef.push({
+          CuadrillaName: item.cuadrilla,
+          codigo_recib: item.material,
+          CantidadRecib: item.cantidad,
+          FechaRecib: new Date().toISOString(),
+          folio_recep: `D-${Date.now()}`,
+        });
+
+        // Update stock in ADMIN_MATERIAL
+        const materialRef = firebase.database().ref(`ADMIN_MATERIAL/${item.material}`);
+        materialRef.once("value").then((snapshot) => {
+          const currentStock = snapshot.val().CantidadActual || 0;
+          materialRef.update({ CantidadActual: currentStock - item.cantidad });
+        });
       });
 
-      // Show the selected tab
-      document.getElementById(tabId).style.display = 'block';
-  }
+      alert("Material despachado correctamente.");
+      materialList = [];
+      updateTable();
+    });
+  });
+</script>
+
+
+
+<script>
+  function openTab(tabId) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.style.display = 'none';
+    });
+
+    // Remove active class from all sidebar links
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.classList.remove('is-active');
+    });
+
+    // Show the selected tab
+    document.getElementById(tabId).style.display = 'block';
+
+    // Highlight the clicked tab in the sidebar
+    document.querySelector(`.sidebar-link[href="#${tabId}"]`)?.classList.add('is-active');
+}
+
 </script>
 
 
@@ -2780,279 +3093,205 @@ const firebaseConfig = {
       tableSalidas.draw();
     });
   });
+
+  //CAMPO REPORTES
   $(document).ready(function () {
-    let map;
-    const bucketMarkers = [];
-    const markerMap = {}; // Map folios to markers
-    const layers = {};
-    const infoWindow = new google.maps.InfoWindow();
-  
-    // Map and Polygon Configuration
-    const polygons = {
-      cto1: [/* Coordinates for CTO 1 */],
-      cto2: [/* Coordinates for CTO 2 */],
-      cto3: [/* Coordinates for CTO 3 */],
-      cto4: [/* Coordinates for CTO 4 */],
-      cto5: [/* Coordinates for CTO 5 */],
-    };
-  
-    const table = $("#circuitoTable").DataTable({
-      responsive: true,
-      autoWidth: false,
-      columns: [
-        { title: "Folio" },
-        { title: "Rpu" },
-        { title: "Lampara" },
-        { title: "Estatus" },
-        { title: "Capacidad" },
-        { title: "Reporte" },    
-        { title: "TiempoAtención" }, // New column
-      ],
-      language: {
-        search: "Buscar:",
-        lengthMenu: "Mostrar _MENU_ registros",
-        info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-        paginate: {
-          first: "Primero",
-          last: "Último",
-          next: "Siguiente",
-          previous: "Anterior",
-        },
+  let map;
+  const bucketMarkers = [];
+  const markerMap = {}; // Map folios to markers
+  const layers = {};
+  const infoWindow = new google.maps.InfoWindow();
+
+  // Map and Polygon Configuration
+  const polygons = {
+    cto1: [/* Coordinates for CTO 1 */],
+    cto2: [/* Coordinates for CTO 2 */],
+    cto3: [/* Coordinates for CTO 3 */],
+    cto4: [/* Coordinates for CTO 4 */],
+    cto5: [/* Coordinates for CTO 5 */],
+  };
+
+  const table = $("#circuitoTable").DataTable({
+    responsive: true,
+    autoWidth: false,
+    columns: [
+      { title: "ID" },
+      { title: "FolioRep" },
+      { title: "FechaCreacion" },
+      { title: "Municipio" },
+      { title: "Origen" },
+      { title: "AsignadoA" },
+      { title: "Trabajo" },
+      { title: "Acciones" },
+    ],
+    language: {
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
       },
-    });
-  
-    // Initialize the map
-    window.initMap = function () {
-      map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 25.772, lng: -100.314 },
-        zoom: 15,
-      });
-  
-      // Create polygon layers
-      for (const [key, coords] of Object.entries(polygons)) {
-        layers[key] = new google.maps.Polygon({
-          paths: coords,
-          strokeColor: "#FF0000",
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: "#FF0000",
-          fillOpacity: 0.35,
-        });
-      }
-  
-      // Add event listeners for layer toggles
-      $(".layer-toggle").each(function () {
-        $(this).on("change", function () {
-          const layerKey = $(this).data("layer");
-          if ($(this).is(":checked")) {
-            layers[layerKey].setMap(map); // Turn on layer
-          } else {
-            layers[layerKey].setMap(null); // Turn off layer
-          }
-        });
-      });
-    };
-  
-    // Function to calculate time difference
-    function calculateTimeDifference(start, end) {
-      const startTime = new Date(start);
-      const endTime = new Date(end);
-  
-      if (isNaN(startTime) || isNaN(endTime)) {
-        return "N/A"; // Return "N/A" if either time is invalid
-      }
-  
-      const diff = Math.abs(endTime - startTime); // Difference in milliseconds
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-  
-      return `${hours.toString().padStart(2, "0")}:${minutes
-        .toString()
-        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-    }
-  
-    // Fetch WorkDone data for a specific folio
-    function fetchWorkDoneData(folio, callback) {
-      const workDoneRef = firebase.database().ref("WorkDone");
-      workDoneRef.orderByChild("folio").equalTo(folio).once("value", (snapshot) => {
-        if (snapshot.exists()) {
-          const workDoneData = Object.values(snapshot.val())[0];
-          const { inicio_job = null, fin_job = null } = workDoneData;
-          const tiempoAtencion = calculateTimeDifference(inicio_job, fin_job);
-          callback(null, { ...workDoneData, tiempoAtencion });
-        } else {
-          callback("No work done found for this folio", null);
-        }
-      });
-    }
-  
-    // Populate table and map with data
-    function populateTableAndMap() {
-      const bucketRef = firebase.database().ref("CIRCUITO");
-  
-      bucketRef.on("value", (snapshot) => {
-        const data = snapshot.val();
-        table.clear();
-  
-        // Clear existing markers
-        bucketMarkers.forEach((marker) => marker.setMap(null));
-        bucketMarkers.length = 0;
-  
-        // Iterate over fetched data
-        for (const key in data) {
-          const job = data[key];
-          const {
-            folio = key, // Use the key as a fallback for Folio
-            capacidad = "N/A",
-            estatus = "N/A",
-            lampara = "N/A",
-            latitud = null,
-            longitud = null,
-            rpu = "N/A",
-            trabajo = "N/A",
-           // work_done = "N/A",
-          } = job;
-  
-          // Filter: Only include records where trabajo is not "sr"
-          if (trabajo !== "sr") {
-            // Fetch WorkDone data for TiempoAtención
-            fetchWorkDoneData(folio, (error, workDoneData) => {
-              let tiempoAtencion = "N/A";
-              if (!error && workDoneData) {
-                tiempoAtencion = workDoneData.tiempoAtencion;
-              }
-  
-              // Add row to DataTable
-              table.row.add([
-                `<span class="folio-link" data-folio="${folio}">${folio}</span>`,
-                rpu,
-                lampara,
-                estatus,
-                capacidad,
-                trabajo,
-                //work_done,
-                tiempoAtencion,
-              ]);
-  
-              table.draw();
-            });
-  
-            // Add marker to map
-            if (latitud && longitud) {
-              const icon = {
-                url: "lamp_Blink_Red.gif",
-                scaledSize: new google.maps.Size(72, 72),
-              };
-  
-              const marker = new google.maps.Marker({
-                position: { lat: parseFloat(latitud), lng: parseFloat(longitud) },
-                map: map,
-                title: `CIRCUITO - ${trabajo}`,
-                icon: icon,
-                optimized: false,
-              });
-  
-              // Add click listener for InfoWindow
-              marker.addListener("click", () => {
-                fetchWorkDoneData(folio, (error, workDoneData) => {
-                  let additionalInfo = "";
-                  if (!error && workDoneData) {
-                    const {
-                      work_done = "N/A",
-                      estatus = "N/A",
-                      inicio_job = "N/A",
-                      fin_job = "N/A",
-                      tiempoAtencion = "N/A",
-                    } = workDoneData;
-  
-                    additionalInfo = `
-                      <tr>
-                        <td style="font-weight: bold; padding: 4px;">Trabajo Realizado:</td>
-                        <td style="padding: 4px;">${work_done}</td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight: bold; padding: 4px;">Estatus:</td>
-                        <td style="padding: 4px;">${estatus}</td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight: bold; padding: 4px;">Inicio del Trabajo:</td>
-                        <td style="padding: 4px;">${inicio_job}</td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight: bold; padding: 4px;">Fin del Trabajo:</td>
-                        <td style="padding: 4px;">${fin_job}</td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight: bold; padding: 4px;">Tiempo de Atención:</td>
-                        <td style="padding: 4px;">${tiempoAtencion}</td>
-                      </tr>
-                    `;
-                  } else {
-                    additionalInfo = `<tr><td colspan="2" style="color: red; padding: 4px;">${error}</td></tr>`;
-                  }
-  
-                  const content = `
-                    <div style="font-family: Arial, sans-serif; color: #333;">
-                      <h4 style="margin: 0; padding: 0 0 5px; font-size: 16px; color: #007BFF;">Detalle-Lampara</h4>
-                      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px;">Folio:</td>
-                          <td style="padding: 4px;">${folio}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px;">Rpu:</td>
-                          <td style="padding: 4px;">${rpu}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px;">Lampara:</td>
-                          <td style="padding: 4px;">${lampara}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px;">Capacidad:</td>
-                          <td style="padding: 4px;">${capacidad}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px;">Reporte:</td>
-                          <td style="padding: 4px;">${trabajo}</td>
-                        </tr>
-                        ${additionalInfo}
-                      </table>
-                    </div>
-                  `;
-                  infoWindow.setContent(content);
-                  infoWindow.open(map, marker);
-                });
-              });
-  
-              // Map folio to marker
-              markerMap[folio] = marker;
-              bucketMarkers.push(marker);
-            }
-          }
-        }
-      });
-    }
-  
-    // Zoom to marker when clicking on folio
-    $("#circuitoTable tbody").on("click", ".folio-link", function () {
-      const folio = $(this).data("folio");
-      const marker = markerMap[folio];
-      if (marker) {
-        map.setCenter(marker.getPosition());
-        map.setZoom(18); // Zoom in
-        google.maps.event.trigger(marker, "click"); // Simulate marker click to show InfoWindow
-      }
-    });
-  
-    // Initialize map and populate data
-    $(".streaming-tab").click(function () {
-      $(".main-container").hide();
-      $(".streaming-container").show();
-      initMap();
-      populateTableAndMap();
-    });
+    },
   });
+
+  // Initialize the map
+  window.initMap = function () {
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: 25.772, lng: -100.314 },
+      zoom: 15,
+    });
+
+    // Create polygon layers
+    for (const [key, coords] of Object.entries(polygons)) {
+      layers[key] = new google.maps.Polygon({
+        paths: coords,
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+      });
+    }
+
+    // Add event listeners for layer toggles
+    $(".layer-toggle").each(function () {
+      $(this).on("change", function () {
+        const layerKey = $(this).data("layer");
+        if ($(this).is(":checked")) {
+          layers[layerKey].setMap(map); // Turn on layer
+        } else {
+          layers[layerKey].setMap(null); // Turn off layer
+        }
+      });
+    });
+  };
+
+  // Function to generate info window content
+  function getInfoWindowContent(folioReporte, municipio, trabajo) {
+    return `
+      <div class="info-window">
+        <div class="info-header">
+          <h3>Reporte #${folioReporte}</h3>
+        </div>
+        <div class="info-body">
+          <p><strong>Municipio:</strong> ${municipio}</p>
+          <p><strong>Trabajo:</strong> ${trabajo}</p>
+        </div>
+        <div class="info-footer">
+          <small>Haz clic para más detalles</small>
+        </div>
+      </div>
+    `;
+  }
+
+  // Populate table and map with data
+  function populateTableAndMap() {
+    const bucketRef = firebase.database().ref("Reportes_test2");
+
+    bucketRef.on("value", (snapshot) => {
+      const data = snapshot.val();
+      table.clear(); // Clear DataTable
+
+      // Clear existing markers
+      bucketMarkers.forEach((marker) => marker.setMap(null));
+      bucketMarkers.length = 0;
+
+      // Iterate over fetched data
+      for (const key in data) {
+        const job = data[key];
+        const {
+          ID = "N/A",
+          FolioReporte = key, // Use the key as a fallback for Folio
+          FechaCreacion = "N/A",
+          Municipio = "N/A",
+          Origen = "N/A",
+          CuadrillaName = "N/A",
+          trabajo = "N/A",
+          Latitud = null,
+          Longitud = null,
+        } = job;
+
+        // Add row to DataTable
+        table.row.add([
+          ID,
+          `<span class="folio-link" data-folio="${FolioReporte}">${FolioReporte}</span>`,
+          FechaCreacion,
+          Municipio,
+          Origen,
+          CuadrillaName,
+          trabajo,
+          `<button class="assign-btn" data-folio="${FolioReporte}">Asignar</button>`
+        ]).draw();
+
+        // Add marker to map
+        if (Latitud && Longitud) {
+          // Determine the icon based on trabajo
+          let iconUrl = "lamp_Blink_Red.gif"; // Default icon for "cambiolamparas" or null trabajo
+          if (trabajo && trabajo.trim() !== "" && trabajo.toLowerCase() !== "cambiolamparas") {
+            // If trabajo is not null, not empty, and not "cambiolamparas", use the green icon
+            iconUrl = "lamp_Blink_GreenOFF.png";
+          }
+
+          const icon = {
+            url: iconUrl,
+            scaledSize: new google.maps.Size(72, 72), // Adjust size as needed
+          };
+
+          const marker = new google.maps.Marker({
+            position: { lat: parseFloat(Latitud), lng: parseFloat(Longitud) },
+            map: map,
+            title: `Reportes_test2 - ${trabajo}`,
+            icon: icon,
+            optimized: false,
+          });
+
+          // Store the marker in markerMap using FolioReporte as the key
+          markerMap[FolioReporte] = marker;
+
+          // Create the info window content
+          const infoWindowContent = getInfoWindowContent(FolioReporte, Municipio, trabajo);
+
+          // Attach the info window to the marker
+          marker.addListener("click", () => {
+            infoWindow.setContent(infoWindowContent);
+            infoWindow.open(map, marker);
+          });
+
+          bucketMarkers.push(marker);
+        }
+      }
+    });
+  }
+
+  // Zoom to marker when clicking on folio
+  $("#circuitoTable tbody").on("click", ".folio-link", function () {
+    const folio = $(this).data("folio");
+    const marker = markerMap[folio];
+
+    if (marker) {
+      // Zoom the map to the marker's position
+      map.setCenter(marker.getPosition());
+      map.setZoom(18); // Adjust zoom level as needed
+
+      // Optionally, open the marker's info window
+      google.maps.event.trigger(marker, "click");
+    } else {
+      console.error(`Marker not found for folio: ${folio}`);
+    }
+  });
+
+  // Initialize map and populate data
+  $(".streaming-tab").click(function () {
+    $(".main-container").hide();
+    $(".streaming-container").show();
+    initMap();
+    populateTableAndMap();
+  });
+});
+  
   $(document).ready(function () {
     // Modal Toggle Function
     function toggleModal(modalId, show) {
@@ -3223,6 +3462,118 @@ const firebaseConfig = {
       fullImageModal.find("img").attr("src", imageUrl);
       fullImageModal.show();
     }
+    // Show full image in the #fullImageModal
+  window.showFullImage = function(imageUrl) {
+    const fullImageModal = document.getElementById("fullImageModal");
+    const modalImg = fullImageModal.querySelector("img");
+    modalImg.src = imageUrl;
+    fullImageModal.style.right = "0"; // or however you slide it in
+    fullImageModal.style.display = "block";
+  };
+
+   // Close the full image modal
+   document.querySelector("#fullImageModal .close").addEventListener("click", () => {
+    const fullImageModal = document.getElementById("fullImageModal");
+    fullImageModal.style.right = "-50%";
+    setTimeout(() => { fullImageModal.style.display = "none"; }, 500);
+  });
+
+  // The main function that fetches EvInicial + WorkDone and merges them by folio
+  function loadCombinedEvidencias() {
+    const combinedGallery = document.getElementById("combinedGallery");
+    combinedGallery.innerHTML = "<p>Loading...</p>";
+
+    // This object will map:  { [folioNumber]: { folio, inicialUrl, finalUrl, ... } }
+    const combinedData = {};
+
+    // 1) Fetch from EvInicial
+    firebase.app("main").database().ref("EvInicial").once("value", (snapshot) => {
+      const inicialData = snapshot.val() || {};
+
+      // For each record in EvInicial
+      Object.keys(inicialData).forEach((key) => {
+        const item = inicialData[key];
+        const folio = item.folio;
+        if (!folio) return; // skip if no folio
+
+        if (!combinedData[folio]) {
+          combinedData[folio] = { folio, inicialUrl: "", finalUrl: "", inicialTimestamp: "", finalTimestamp: "" };
+        }
+        combinedData[folio].inicialUrl = item.image_url || "";
+        combinedData[folio].inicialTimestamp = item.timestamp || "";
+      });
+
+      // 2) Fetch from WorkDone (final)
+      firebase.app("main").database().ref("WorkDone").once("value", (snap2) => {
+        const finalData = snap2.val() || {};
+
+        Object.keys(finalData).forEach((key) => {
+          const item2 = finalData[key];
+          const folio2 = item2.folio;
+          if (!folio2) return;
+
+          if (!combinedData[folio2]) {
+            combinedData[folio2] = { folio: folio2, inicialUrl: "", finalUrl: "", inicialTimestamp: "", finalTimestamp: "" };
+          }
+          combinedData[folio2].finalUrl = item2.image_url || "";
+          combinedData[folio2].finalTimestamp = item2.timestamp || "";
+        });
+
+        // Now we have combined data from both references
+        // 3) Sort them by folio (numeric)
+        const sortedFolios = Object.keys(combinedData).sort((a, b) => parseInt(a) - parseInt(b));
+
+        // 4) Build the HTML for each combined record
+        combinedGallery.innerHTML = ""; // clear the "Loading..." text
+
+        sortedFolios.forEach((folioKey) => {
+          const record = combinedData[folioKey];
+          const folio = record.folio;
+          const inicialUrl = record.inicialUrl;
+          const finalUrl = record.finalUrl;
+          const inicialTime = formatTimestamp(record.inicialTimestamp);
+          const finalTime = formatTimestamp(record.finalTimestamp);
+
+          // We'll build a single "card" that shows both images side by side
+          // or stacked. Adjust to your preference.
+
+          const cardHtml = `
+            <div style="display: flex; gap: 16px; margin-bottom: 20px;">
+              <!-- INICIAL PIC -->
+              <div class="gallery-card" style="width: 45%;" onclick="showFullImage('${inicialUrl}')">
+                <img src="${inicialUrl}" alt="Folio ${folio} - Inicial" />
+                <div class="gallery-info">
+                  <p><strong>Folio:</strong> ${folio}</p>
+                  <p><strong>FechaAt:</strong> ${inicialTime}</p>
+                  <p><strong>Tipo:</strong> Inicial</p>
+                </div>
+              </div>
+
+              <!-- FINAL PIC -->
+              <div class="gallery-card" style="width: 45%;" onclick="showFullImage('${finalUrl}')">
+                <img src="${finalUrl}" alt="Folio ${folio} - Final" />
+                <div class="gallery-info">
+                  <p><strong>Folio:</strong> ${folio}</p>
+                  <p><strong>FechaAt:</strong> ${finalTime}</p>
+                  <p><strong>Tipo:</strong> Final</p>
+                </div>
+              </div>
+            </div>
+          `;
+          combinedGallery.insertAdjacentHTML("beforeend", cardHtml);
+        });
+      });
+    });
+  }
+
+  // Button to open the modal & load combined data
+  document.getElementById("combinedEvidenciasButton").addEventListener("click", () => {
+    // Show the modal
+    toggleModal("combinedEvidenciasModal", true);
+    // Then load the combined data
+    loadCombinedEvidencias();
+  });
+
   
     $("#fullImageModal .close").click(function () {
       $("#fullImageModal").hide();
@@ -3235,50 +3586,215 @@ $("#toggleViewSwitch").change(function () {
 
     // Handle Evidencias Button Click
     $("#evidenciasButton").click(function () {
-      toggleModal("evidenciasModal", true);
+      // Slide the modal in
+  toggleModal("evidenciasModal", true);
+
+const galleryContainer = $("#gallery");
+galleryContainer.empty(); // Clear out old content
+
   
-      const galleryContainer = $("#gallery");
-      galleryContainer.empty(); // Clear previous content
+      // 1) EVIDENCIA INICIAL from dbMain
+  galleryContainer.append('<h3 style="color: #fff;">Evidencia Inicial</h3>');
+  dbMain.ref("EvInicial").once("value", (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      Object.keys(data).forEach((key) => {
+        const item = data[key];
+        const folio = item.folio;
+        const imageUrl = item.image_url || "";
+        const rawTimestamp = item.timestamp || "";
+        const timestamp = formatTimestamp(rawTimestamp);
+
+        // Build one "inicial" card
+        const card = `
+          <div class="gallery-card" onclick="showFullImage('${imageUrl}')">
+            <img src="${imageUrl}" alt="EvidenciaInicial-Folio${folio}" />
+            <div class="gallery-info">
+              <p><strong>Folio:</strong> ${folio}</p>
+              <p><strong>FechaAt:</strong> ${timestamp}</p>
+              <p><strong>Tipo:</strong> Inicial</p>
+            </div>
+          </div>
+        `;
+        galleryContainer.append(card);
+      });
+    }
+  });
+
+  // 2) EVIDENCIA FINAL from dbSecondary
+  // (or whichever reference you want—maybe "WorkDoneFinal", or "WorkDone" with a different field)
+  galleryContainer.append('<hr/><h3 style="color: #fff;">Evidencia Final</h3>');
+  dbMain.ref("WorkDone").once("value", (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      Object.keys(data).forEach((key) => {
+        const item = data[key];
+        const folio = item.folio;
+        const imageUrl = item.image_url || "";
+        const rawTimestamp = item.timestamp || "";
+        const timestamp = formatTimestamp(rawTimestamp);
+
+        // Build one "final" card
+        const card = `
+          <div class="gallery-card" onclick="showFullImage('${imageUrl}')">
+            <img src="${imageUrl}" alt="EvidenciaFinal-Folio${folio}" />
+            <div class="gallery-info">
+              <p><strong>Folio:</strong> ${folio}</p>
+              <p><strong>FechaAt:</strong> ${timestamp}</p>
+              <p><strong>Tipo:</strong> Final</p>
+            </div>
+          </div>
+        `;
+        galleryContainer.append(card);
+      });
+    } } )
+  });
+});
   
-      // Fetch WorkDone Data from Primary Database
-      dbMain.ref("WorkDone").once("value", (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          Object.keys(data).forEach((key) => {
-            const item = data[key];
-            const folio = item.folio;
-            const imageUrl = item.image_url;
-            const rawTimestamp = item.timestamp;
-            const timestamp = formatTimestamp(rawTimestamp); // Format the timestamp
-  
-            // Fetch Additional Data from Secondary Database
-            dbSecondary.ref("WorkDone").orderByChild("folio").equalTo(parseInt(folio)).once("value", (snap) => {
-              const secondaryData = snap.val();
-              const additionalData = secondaryData ? Object.values(secondaryData)[0] : {};
-              const workDone = additionalData.work_done || "No Data";
-              const estatus = additionalData.estatus || "No Status";
-  
-              // Create Gallery Card
-              const galleryCard = `
-                <div class="gallery-card" onclick="showFullImage('${imageUrl}')">
-                    <img src="${imageUrl}" alt="Evidencia for folio ${folio}" />
-                  <div class="gallery-info">
-                    <p><strong>Folio:</strong> ${folio}</p>
-                    <p><strong>FechaAt:</strong> ${timestamp}</p>
-                    <p><strong>Atención:</strong> ${workDone}</p>
-                    <p><strong>Estatus:</strong> ${estatus}</p>
-                  </div>
-                </div>
-              `;
-  
-              galleryContainer.append(galleryCard);
-            });
+</script>
+
+<script>
+  $(document).ready(function() {
+    // ...
+
+    // When the user clicks the "Asignar" button in the table:
+    $('#circuitoTable tbody').on('click', '.assign-btn', function() {
+      // Get the FolioReporte from data-folio
+      const folio = $(this).data('folio');
+      
+      // Fill the modal’s input so user sees which Folio they’re assigning
+      $('#selectedFolio').val(folio);
+
+      // Slide in or show the modal
+      toggleModal('assignCuadrillaModal', true);
+    });
+
+    // Close button in the modal
+    $('#assignCuadrillaModal .close').on('click', function(){
+      toggleModal('assignCuadrillaModal', false);
+    });
+
+    // The assign form submission
+    $('#assignCuadrillaForm').submit(function(e) {
+      e.preventDefault();
+      
+      const folioReporte = $('#selectedFolio').val();
+      const selectedCuad = $('#assignSelectCuadrilla').val();
+      if (!selectedCuad) {
+        alert('Seleccione una Cuadrilla.');
+        return;
+      }
+
+      // 1) Find the record in "Reportes_test2" matching folioReporte
+      //    We do that by searching the child "FolioReporte".
+      const reportesRef = firebase.database().ref('Reportes_test2');
+      reportesRef.orderByChild('FolioReporte').equalTo(folioReporte).once('value')
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+           // Create the custom timestamp string: YYYY-MM-DD HH:mm:ss
+           const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const fechaAsignacion = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+          // There's typically just one match if FolioReporte is unique
+          const updates = {};
+          // For example, you can store the current time as an ISO string:
+        //const timestamp = new Date().toISOString();
+          snapshot.forEach((childSnap) => {
+            const key = childSnap.key;
+            // 2) Update "CuadrillaName"
+            updates[`Reportes_test2/${key}/CuadrillaName`] = selectedCuad;
+            // Add your FechaCreacion field here:
+            updates[`Reportes_test2/${key}/FechaAsignacion`] = fechaAsignacion;
           });
+
+          // 3) Perform the update
+          return firebase.database().ref().update(updates);
+        } else {
+          throw new Error('No record found with that FolioReporte.');
         }
+      })
+      .then(() => {
+        alert('Asignación completa.');
+        // Optionally re-draw table or refresh row
+        toggleModal('assignCuadrillaModal', false);
+      })
+      .catch((err) => {
+        console.error('Error assigning cuadrilla:', err);
+        alert('Error al asignar cuadrilla, revise la consola.');
       });
     });
+
+
+    // Reusable function to open/close your sliding modals
+    function toggleModal(modalId, show) {
+      const $modal = $('#' + modalId);
+      if (show) {
+        $modal.css('right', '0');
+        $modal.show();
+      } else {
+        $modal.css('right', '-50%');
+        setTimeout(() => $modal.hide(), 500);
+      }
+    }
+
+    // ...
   });
-  
+</script>
+
+
+
+<script>
+  $(document).ready(function () {
+  $("#dispatchForm").submit(function (event) {
+    event.preventDefault();
+
+    const materialId = $("#dispatchMaterialId").val();
+    const description = $("#dispatchDescription").val();
+    const um = $("#dispatchUM").val();
+    const availableQty = parseInt($("#dispatchAvailableQty").val(), 10);
+    const selectedCuadrilla = $("#dispatchCuadrilla").val();
+    const cantidadDespachada = parseInt($("#dispatchCantidad").val(), 10);
+
+    if (!selectedCuadrilla || cantidadDespachada <= 0 || cantidadDespachada > availableQty) {
+      alert("Error: Cantidad inválida o cuadrilla no seleccionada.");
+      return;
+    }
+
+    // Reference to Cuadrilla_Material table
+    const cuadrillaRef = firebase.database().ref("Cuadrilla_Material");
+
+    // Save the dispatch record
+    const newDispatch = {
+      codigo_recib: materialId,
+      Descripcion: description,
+      UM: um,
+      CantidadRecib: cantidadDespachada,
+      CuadrillaName: selectedCuadrilla,
+      FechaRecib: new Date().toISOString(),
+      folio_recep: `D-${Date.now()}`, // Unique folio
+    };
+
+    cuadrillaRef.push(newDispatch)
+      .then(() => {
+        alert("Material despachado correctamente.");
+
+        // Update stock in ADMIN_MATERIAL
+        const materialRef = firebase.database().ref(`ADMIN_MATERIAL/${materialId}`);
+        materialRef.update({ CantidadActual: availableQty - cantidadDespachada });
+
+        $("#dispatchModal").fadeOut();
+      })
+      .catch((error) => {
+        console.error("Error al despachar material:", error);
+      });
+  });
+});
+
 </script>
 
 <script>
