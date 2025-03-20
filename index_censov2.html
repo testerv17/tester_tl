@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Monitor-Censo-Campo</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- DataTables CSS -->
+  <link
+    href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"
+    rel="stylesheet"
+  />
+  <!-- Modern Google Font for that 2025 vibe -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* 
+      GLOBAL STYLES:
+      - Dark futurist background with subtle gradient
+      - Using your color #1f1d2b and #2a3345
+      - Glass-like panels with partial transparency
+    */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #1f1d2b 0%, #2a3345 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* A subtle fade-in for the entire page */
+    body {
+      animation: fadeIn 0.8s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HEADER */
+    .app-header {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      /* Glass effect */
+      background: rgba(42, 51, 69, 0.4);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 25px rgba(0,0,0,0.3);
+    }
+    .app-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+
+    /* CONTAINER for entire content */
+    .main-container {
+      max-width: 1400px;
+      margin: 1rem auto;
+      padding: 1rem;
+      /* Another glass-like panel effect */
+      background: rgba(31, 29, 43, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      box-shadow: 0 0 50px rgba(0,0,0,0.3);
+    }
+
+    /* MAP */
+    .map-container {
+      width: 100%;
+      height: 500px;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* NAV PILLS (Cuadrillas & Censo) */
+    .nav-pills .nav-link {
+      border-radius: 6px;
+      margin: 0 0.3rem;
+      color: #ffffff;
+      background-color: rgba(255,255,255,0.1);
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .nav-pills .nav-link.active {
+      background-color: #ffffff;
+      color: #2a3345 !important;
+      border-color: #ffffff;
+    }
+    .nav-pills .nav-link:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+
+    /* TABLES & DATATABLES */
+    table.dataTable thead th {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-bottom: 2px solid #ffffff;
+      color: #ffffff;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    table.dataTable tbody tr {
+      background-color: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      transition: background-color 0.2s;
+    }
+    table.dataTable tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+    table.dataTable td {
+      vertical-align: middle;
+    }
+
+    /* INFO-WINDOW for the map markers */
+    .info-window-content {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: #111;
+    }
+    .info-window-content strong {
+      color: #333;
+    }
+
+    /* IMAGE PREVIEW MODAL */
+    .modal-content {
+      background-color: #2a3345;
+      color: #ffffff;
+      border-radius: 10px;
+      border: none;
+    }
+    .modal-header {
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .modal-title {
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+    .modal-body img {
+      max-width: 90%;
+      max-height: 70vh;
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+    }
+
+    /* TRIM PADDING on DATATABLES to keep it neat */
+    .dataTables_wrapper .row {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="app-header">
+    <h1 class="app-title">Monitor Censo Campo</h1>
+  </header>
+
+  <!-- MAIN CONTENT WRAPPER (Glass Panel) -->
+  <div class="main-container">
+    <!-- MAP -->
+    <div id="map" class="map-container"></div>
+
+    <!-- NAV PILLS -->
+    <ul class="nav nav-pills mb-4 justify-content-center" id="cuadrillaTabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="cuadrilla1-tab" data-toggle="pill"
+           href="#cuadrilla1" role="tab"
+        >Cuadrilla1</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="cuadrilla2-tab" data-toggle="pill"
+           href="#cuadrilla2" role="tab"
+        >Cuadrilla2</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="cuadrilla3-tab" data-toggle="pill"
+           href="#cuadrilla3" role="tab"
+        >Cuadrilla3</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="cuadrilla4-tab" data-toggle="pill"
+           href="#cuadrilla4" role="tab"
+        >Cuadrilla4</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="cuadrilla5-tab" data-toggle="pill"
+           href="#cuadrilla5" role="tab"
+        >Cuadrilla5</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="cuadrilla6-tab" data-toggle="pill"
+           href="#cuadrilla6" role="tab"
+        >Cuadrilla6</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="censoAlum-tab" data-toggle="pill"
+           href="#censoAlum" role="tab"
+        >Censo Alum</a>
+      </li>
+    </ul>
+
+    <!-- TAB CONTENT -->
+    <div class="tab-content">
+      <!-- Cuadrilla1 Table -->
+      <div class="tab-pane fade show active" id="cuadrilla1" role="tabpanel">
+        <table id="cuadrilla1Table" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Medidor</th>
+              <th>Lampara</th>
+              <th>Capacidad</th>
+              <th>Estatus</th>
+              <th>Fecha/Hora</th>
+              <th>Comentarios</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      <!-- Cuadrilla2 Table -->
+      <div class="tab-pane fade" id="cuadrilla2" role="tabpanel">
+        <table id="cuadrilla2Table" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Medidor</th>
+              <th>Lampara</th>
+              <th>Capacidad</th>
+              <th>Estatus</th>
+              <th>Fecha/Hora</th>
+              <th>Comentarios</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      <!-- Cuadrilla3 Table -->
+      <div class="tab-pane fade" id="cuadrilla3" role="tabpanel">
+        <table id="cuadrilla3Table" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Medidor</th>
+              <th>Lampara</th>
+              <th>Capacidad</th>
+              <th>Estatus</th>
+              <th>Fecha/Hora</th>
+              <th>Comentarios</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      <!-- Cuadrilla4 Table -->
+      <div class="tab-pane fade" id="cuadrilla4" role="tabpanel">
+        <table id="cuadrilla4Table" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Medidor</th>
+              <th>Lampara</th>
+              <th>Capacidad</th>
+              <th>Estatus</th>
+              <th>Fecha/Hora</th>
+              <th>Comentarios</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      <!-- Cuadrilla5 Table -->
+      <div class="tab-pane fade" id="cuadrilla5" role="tabpanel">
+        <table id="cuadrilla5Table" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Medidor</th>
+              <th>Lampara</th>
+              <th>Capacidad</th>
+              <th>Estatus</th>
+              <th>Fecha/Hora</th>
+              <th>Comentarios</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      <!-- Cuadrilla6 Table -->
+      <div class="tab-pane fade" id="cuadrilla6" role="tabpanel">
+        <table id="cuadrilla6Table" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Medidor</th>
+              <th>Lampara</th>
+              <th>Capacidad</th>
+              <th>Estatus</th>
+              <th>Fecha/Hora</th>
+              <th>Comentarios</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      <!-- CensoAlum Table -->
+      <div class="tab-pane fade" id="censoAlum" role="tabpanel">
+        <table id="censoAlumTable" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Medidor</th>
+              <th>Anomalía</th>
+              <th>Capacidad</th>
+              <th>Estatus</th>
+              <th>Fecha/Hora</th>
+              <th>Comentarios</th>
+              <th>Evidence</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase JS SDK v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+  <!-- Google Maps (async load) -->
+  <script
+    async
+    defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvhXkpjn3NIKaTnuL3X_W-IMty4urq2MA"
+  ></script>
+
+  <!-- jQuery, DataTables, Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    let map;
+    let userMarkers = {};
+
+    /* 
+      A: HELPER: Capitalize first letter of each word
+    */
+    function capitalizeWords(str) {
+      if (!str) return "";
+      return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+
+    /*
+      B: NEW FUNCTION => populateCensoAlum:
+         Pulls from node "CENSO_ALUM", matches medidor -> /evidenciacensotc/<medidor>.jpg,
+         and displays a clickable thumbnail in the "Evidence" column 
+    */
+    function populateCensoAlum() {
+      const dbRef = firebase.database().ref("CIRCUITO_ALUM");
+      const storageRef = firebase.storage().ref("evidenciacensotc");
+      const dataTable = $("#censoAlumTable").DataTable();
+
+      // Listen for changes
+      dbRef.on("value", (snapshot) => {
+        const data = snapshot.val() || {};
+        dataTable.clear();
+
+        Object.keys(data).forEach((key) => {
+          const record = data[key];
+          const medidorVal = record.medidor || "N/A";
+
+          // Build the row data
+          const rowData = [
+            medidorVal,
+            record.anomalia || "N/A",
+            record.capacidad || "N/A",
+            record.estatus || "N/A",
+            (record.timestamp || "").split(".")[0],
+            record.comentarios || "N/A",
+            "Loading..."
+          ];
+
+          // Add row to DataTable
+          const rowNode = dataTable.row.add(rowData).draw().node();
+
+          // Attempt to fetch <medidorVal>.jpg
+          storageRef.child(`${medidorVal}.jpg`).getDownloadURL()
+            .then((url) => {
+              dataTable
+                .cell(rowNode, 6)
+                .data(`
+                  <img src="${url}" alt="Evidence"
+                       style="max-height: 64px; border-radius: 4px; cursor: pointer;"
+                       onclick="openImagePreview('${url}')">
+                `)
+                .draw();
+            })
+            .catch((error) => {
+              dataTable.cell(rowNode, 6).data("No image").draw();
+            });
+        });
+      });
+    }
+
+    /*
+      C: MODAL PREVIEW HELPER
+    */
+    function openImagePreview(imageUrl) {
+      document.getElementById("previewImage").src = imageUrl;
+      $("#imageModal").modal("show");
+    }
+
+    /*
+      D: MAP INIT => We'll try a futuristic style from Snazzy or so
+    */
+    function initMap() {
+      const mapOptions = {
+        center: { lat: 25.6866, lng: -100.3161 },
+        zoom: 12,
+        styles: [
+          {
+            "featureType": "all",
+            "elementType": "geometry",
+            "stylers": [
+              { "color": "#2a3345" }
+            ]
+          },
+          {
+            "featureType": "all",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              { "gamma": 0.01 },
+              { "lightness": 20 },
+              { "color": "#ffffff" }
+            ]
+          },
+          {
+            "featureType": "all",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+              { "visibility": "on" },
+              { "color": "#1f1d2b" },
+              { "lightness": 16 }
+            ]
+          },
+          {
+            "featureType": "all",
+            "elementType": "labels.icon",
+            "stylers": [
+              { "visibility": "off" }
+            ]
+          },
+          {
+            "featureType": "administrative",
+            "elementType": "geometry.fill",
+            "stylers": [
+              { "color": "#ffffff" },
+              { "visibility": "off" }
+            ]
+          },
+          {
+            "featureType": "administrative",
+            "elementType": "geometry.stroke",
+            "stylers": [
+              { "visibility": "off" }
+            ]
+          },
+          {
+            "featureType": "landscape",
+            "elementType": "geometry",
+            "stylers": [
+              { "color": "#1f1d2b" }
+            ]
+          },
+          {
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [
+              { "color": "#333d56" }
+            ]
+          }
+        ]
+      };
+      map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    }
+
+    /*
+      E: Populate each Cuadrilla table with data from "CensoRT"
+         and add markers on the map 
+    */
+    function populateTableAndMap(username, tableId, iconUrl) {
+      const db = firebase.database();
+      const ref = db.ref("CensoRT");
+      const dataTable = $(`#${tableId}`).DataTable();
+
+      ref.on("value", (snapshot) => {
+        dataTable.clear();
+        if (userMarkers[username]) {
+          userMarkers[username].forEach((m) => m.setMap(null));
+        }
+        userMarkers[username] = [];
+
+        let allData = snapshot.val() || {};
+        let infoWindow = new google.maps.InfoWindow();
+
+        for (let key in allData) {
+          let job = allData[key];
+          if (job.username === username) {
+            let medidor = job.medidor || "N/A";
+            let lampara = capitalizeWords(job.lampara);
+            let capacidad = capitalizeWords(job.capacidad);
+            let estatus = capitalizeWords(job.estatus);
+            let truncatedTimestamp = (job.timestamp || "").split(".")[0];
+            let comentarios = capitalizeWords(job.comentarios);
+            let latitude = parseFloat(job.latitude);
+            let longitude = parseFloat(job.longitude);
+
+            // Add row to table
+            dataTable.row.add([
+              medidor, lampara, capacidad, estatus, truncatedTimestamp, comentarios
+            ]);
+
+            // If lat/lng is valid, create a map marker
+            if (!isNaN(latitude) && !isNaN(longitude)) {
+              let marker = new google.maps.Marker({
+                position: { lat: latitude, lng: longitude },
+                map: map,
+                icon: {
+                  url: iconUrl,
+                  scaledSize: new google.maps.Size(38, 38)
+                }
+              });
+              google.maps.event.addListener(marker, "click", () => {
+                const content = `
+                  <div class="info-window-content">
+                    <strong>Usuario:</strong> ${username}<br/>
+                    <strong>Estatus:</strong> ${estatus}<br/>
+                    <strong>Comentarios:</strong> ${comentarios}<br/>
+                    <strong>Capacidad:</strong> ${capacidad}<br/>
+                    <strong>Lampara:</strong> ${lampara}<br/>
+                    <strong>Medidor:</strong> ${medidor}<br/>
+                    <strong>Hora:</strong> ${truncatedTimestamp}
+                  </div>
+                `;
+                infoWindow.setContent(content);
+                infoWindow.open(map, marker);
+              });
+              userMarkers[username].push(marker);
+            }
+          }
+        }
+        dataTable.draw();
+      });
+    }
+
+    /*
+      F: Optionally populate "CIRCUITO_ALUM" markers
+    */
+    function populateCircuitoBucket(bucket, iconUrl) {
+      const ref = firebase.database().ref(bucket);
+      const infoWindow = new google.maps.InfoWindow();
+
+      ref.on("value", (snapshot) => {
+        const data = snapshot.val() || {};
+        for (const key in data) {
+          const item = data[key];
+          const lat = parseFloat(item.latitude);
+          const lng = parseFloat(item.longitude);
+
+          if (!isNaN(lat) && !isNaN(lng)) {
+            const marker = new google.maps.Marker({
+              position: { lat, lng },
+              map: map,
+              icon: { url: iconUrl, scaledSize: new google.maps.Size(28, 28) }
+            });
+
+            google.maps.event.addListener(marker, "click", () => {
+              const content = `
+                <div class="info-window-content">
+                  <h5 style="margin-top:0;">Circuito Alumbrado</h5>
+                  <table>
+                    <tr><td><strong>Medidor:</strong></td><td>${item.medidor || "N/A"}</td></tr>
+                    <tr><td><strong>Anomalía:</strong></td><td>${capitalizeWords(item.anomalia || "N/A")}</td></tr>
+                    <tr><td><strong>Comentarios:</strong></td><td>${capitalizeWords(item.comentarios || "N/A")}</td></tr>
+                    <tr><td><strong>Facturación:</strong></td><td>${capitalizeWords(item.facturacion || "N/A")}</td></tr>
+                    <tr><td><strong>Lectura:</strong></td><td>${item.lectura || "N/A"}</td></tr>
+                    <tr><td><strong>Suministro:</strong></td><td>${capitalizeWords(item.suministro || "N/A")}</td></tr>
+                    <tr><td><strong>Timestamp:</strong></td><td>${(item.timestamp || "N/A").split(".")[0]}</td></tr>
+                    <tr><td><strong>Trabajador:</strong></td><td>${capitalizeWords(item.trabajador || "N/A")}</td></tr>
+                    <tr><td><strong>Usuario:</strong></td><td>${capitalizeWords(item.username || "N/A")}</td></tr>
+                    <tr><td><strong>Voltaje:</strong></td><td>${item.voltaje || "N/A"}</td></tr>
+                  </table>
+                </div>
+              `;
+              infoWindow.setContent(content);
+              infoWindow.open(map, marker);
+            });
+          }
+        }
+      });
+    }
+
+    /*
+      G: On page load => init Firebase, map, DataTables, then populate data
+    */
+    window.onload = function() {
+      // ***** 1. Firebase config => UPDATE with your real info *****
+      const firebaseConfig = {
+        apiKey: "AIzaSyCGuGpJEWo1_9gWwgSv3JO9s1051wDpY6E",
+        authDomain: "alumbradopubliconte.firebaseapp.com",
+        databaseURL: "https://alumbradopubliconte-default-rtdb.firebaseio.com",
+        projectId: "alumbradopubliconte",
+        storageBucket: "alumbradopubliconte.appspot.com",
+        messagingSenderId: "842157703635",
+        appId: "1:842157703635:web:64db480e6191f6c0326f26",
+        measurementId: "G-H4PG2MM8S5"
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      // ***** 2. Init map *****
+      initMap();
+
+      // ***** 3. Init DataTables for each
+      $("#cuadrilla1Table, #cuadrilla2Table, #cuadrilla3Table, #cuadrilla4Table, #cuadrilla5Table, #cuadrilla6Table, #censoAlumTable").DataTable();
+
+      // ***** 4. Populate each Cuadrilla
+      populateTableAndMap("cuadrilla1", "cuadrilla1Table", "st_lamp_blue.png");
+      populateTableAndMap("cuadrilla2", "cuadrilla2Table", "st_lamp100.png");
+      populateTableAndMap("cuadrilla3", "cuadrilla3Table", "st_lamp_orange.png");
+      populateTableAndMap("cuadrilla4", "cuadrilla4Table", "st_lamp_dblue.png");
+      populateTableAndMap("cuadrilla5", "cuadrilla5Table", "st_lamp_cyan.png");
+      populateTableAndMap("cuadrilla6", "cuadrilla6Table", "st_lamp_green.png");
+
+      // ***** 5. Optionally populate a circuits bucket (if you have it)
+      populateCircuitoBucket("CIRCUITO_ALUM", "cto1.png");
+
+      // ***** 6. Finally, populate CENSO_ALUM with image previews
+      populateCensoAlum();
+    };
+  </script>
+
+  <!-- MODAL: Image Preview -->
+  <div
+    class="modal fade"
+    id="imageModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="imageModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+          <button
+            type="button"
+            class="close text-white"
+            data-dismiss="modal"
+            aria-label="Close"
+            style="opacity:1;"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <img
+            id="previewImage"
+            src=""
+            alt="Preview"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
