@@ -2404,6 +2404,14 @@ button.vjs-play-control.vjs-control.vjs-button {
   Monitor Censo
 </a>
 
+<a class="sidebar-link trabajos-campo" href="#" onclick="openTab('trabajos-campo')">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M3 3H21V21H3V3Z" stroke="white" stroke-width="2"/>
+  </svg>
+  TrabajosCampo
+</a>
+
+
 
 
 
@@ -2687,6 +2695,27 @@ button.vjs-play-control.vjs-control.vjs-button {
   </div>
 </div>
 
+<div id="trabajos-campo" class="tab-content" style="display: none;">
+  <div class="main-header anim" style="--delay: 0s">
+    <img class="user-img" src="tt.png" alt="">Trabajos en Campo
+  </div>
+
+  <table id="trabajosCampoTable" class="display" style="width:100%;">
+    <thead>
+      <tr>
+        <th>Folio Reporte</th>
+        <th>Causa de Falla</th>
+        <th>Responsable</th>
+        <th>Trabajo Realizado</th>
+        <th>Fecha Atendido</th>
+        <th>Firma</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+
 
 
   <div id="monitor-cuadrillas" class="tab-content" style="display: none;">
@@ -2732,6 +2761,124 @@ button.vjs-play-control.vjs-control.vjs-button {
 <!-- <script src="./script.js"></script>
 <script src="./scriptv3.js"></script>  -->
 
+<script>
+  // Correct Firebase configuration for WorkDone bucket
+  const firebaseConfig1 = {
+    apiKey: "AIzaSyAmUH1B1JDgQMHsVML3Fd4unZ8fzAQuq7s",
+    authDomain: "tsterapp-fcf1b.firebaseapp.com",
+    databaseURL: "https://tsterapp-fcf1b-default-rtdb.firebaseio.com",
+    projectId: "tsterapp-fcf1b",
+    storageBucket: "tsterapp-fcf1b.appspot.com",
+    messagingSenderId: "27987269810",
+    appId: "1:27987269810:web:5da5ddb5d3e526739751ab",
+    measurementId: "G-XNS6DBLVEY",
+  };
+  
+  // Initialize Firebase default instance clearly
+  firebase.initializeApp(firebaseConfig1);
+  console.log("🔥 Firebase tsterapp initialized successfully");
+  </script>
+  
+
+<script>
+  // Firebase reference
+  const workDoneRef = firebase.database().ref("WorkDone");
+
+  
+  // Initialize DataTable
+  const trabajosCampoTable = $("#trabajosCampoTable").DataTable({
+    responsive: true,
+    autoWidth: false,
+    columns: [
+      { title: "Folio Reporte" },
+      { title: "Causa de Falla" },
+      { title: "Responsable" },
+      { title: "Trabajo Realizado" },
+      { title: "Fecha Atendido" },
+      { title: "Firma" },
+    ],
+    language: {
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
+  });
+  
+  // Correct and Debugged Load Function
+  function loadTrabajosCampoData() {
+  workDoneRef.on("value", (snapshot) => {
+    const data = snapshot.val();
+    trabajosCampoTable.clear();
+
+    if (data) {
+      console.log("✅ Correct Firebase Data Loaded:", data);
+
+      Object.entries(data).forEach(([key, item]) => {
+        const firmaImg = item.firma
+          ? `<img src="${item.firma}" style="width:100px; cursor:pointer;" onclick="previewFirma('${item.firma}', '${item.folioReporte}')">`
+          : "N/A";
+
+        trabajosCampoTable.row.add([
+          item.folioReporte || "N/A",
+          item.causaFalla || "N/A",
+          item.responsable || "N/A",
+          item.trabajoRealizado || "N/A",
+          item.fechaAtendido || "N/A",
+          firmaImg,
+        ]);
+      });
+    } else {
+      console.warn("🚫 No data found in WorkDone bucket");
+    }
+
+    trabajosCampoTable.draw();
+  }, (error) => {
+    console.error("🚫 Firebase read error:", error);
+  });
+}
+
+  
+  // Preview function
+  function previewFirma(url, folioReporte) {
+    const modalHtml = `
+      <div id="firmaModal" class="modal" style="right:0; display:block;">
+        <div class="modal-content">
+          <span class="close" onclick="closeFirmaModal()">&times;</span>
+          <h2>Firma de ${folioReporte}</h2>
+          <img src="${url}" style="width:100%; height:auto;" />
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+  }
+  
+  function closeFirmaModal() {
+    document.getElementById('firmaModal').remove();
+  }
+  
+  // Trigger the Data load explicitly
+  $(".sidebar-link.trabajos-campo").click(() => {
+    $(".main-container").hide();
+    $("#trabajos-campo").show();
+    loadTrabajosCampoData();
+  });
+  </script>
+  
+
+
+
+  
+  
+
+
+ 
+    
 
 <script>
   // This function sets the iframe’s height = the scrollHeight of its content
