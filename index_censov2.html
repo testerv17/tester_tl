@@ -320,8 +320,8 @@
             <tr>
               <th>Medidor</th>
               <th>Anomalía</th>
-              <th>Capacidad</th>
-              <th>Estatus</th>
+              <th>Lectura</th>
+              <th>Suministro</th>
               <th>Fecha/Hora</th>
               <th>Comentarios</th>
               <th>Evidence</th>
@@ -385,8 +385,8 @@
           const rowData = [
             medidorVal,
             record.anomalia || "N/A",
-            record.capacidad || "N/A",
-            record.estatus || "N/A",
+            record.lectura || "N/A",
+            record.suministro || "N/A",
             (record.timestamp || "").split(".")[0],
             record.comentarios || "N/A",
             "Loading..."
