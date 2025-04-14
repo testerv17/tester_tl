@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" >
+
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tecnoluminus</title>
-  <!-- Normalize CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
-  <!-- Video.js CSS -->
-  <link rel="stylesheet" href="https://vjs.zencdn.net/5-unsafe/video-js.css">
-
-  <!-- Custom CSS -->
-  <!-- <link rel="stylesheet" href="./style.css">
+<meta charset="utf-8"/>
+<title>Tecnoluminus</title>
+<!-- Normalize CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet"/>
+<!-- Video.js CSS -->
+<link href="https://vjs.zencdn.net/5-unsafe/video-js.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<!-- <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./stylev3.css"> -->
-
-  <!-- DataTables CSS -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  <style>
+<!-- DataTables CSS -->
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap");
 * {
   box-sizing: border-box;
@@ -2520,7 +2517,7 @@ button.vjs-play-control.vjs-control.vjs-button {
 
 
   </style>
-  <style>
+<style>
     body2 { font-family: Arial, sans-serif; background: #101827; color: white; padding: 40px; }
     .modal2 { display: none; position: fixed; top: 20%; left: 30%; width: 40%; background-color: #2a3653; padding: 20px; border-radius: 10px; z-index: 1000; }
     .modal2-content { display: flex; flex-direction: column; }
@@ -2529,456 +2526,361 @@ button.vjs-play-control.vjs-control.vjs-button {
     .modal2-content .close { cursor: pointer; align-self: flex-end; font-size: 20px; font-weight: bold; color: white; }
    /* #btn-update-restock { padding: 10px 20px; font-size: 16px; background-color: #4dc3fa; border: none; border-radius: 6px; cursor: pointer; } */
   </style>
-
-</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script></head>
 <body>
 <!-- partial:index.partial.html -->
 <div class="container">
- <div class="sidebar">
-  <span class="logo">S</span>
-  <!-- <a class="logo-expand" href="#">TecnoLuminus</a> -->
-  <div class="side-wrapper">
-   <div class="side-title">MENU</div>
-   <div class="side-menu">
-    <a class="sidebar-link almacen is-active" href="#" onclick="openTab('almacen')">
-      <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 7V3h18v4M3 7v14h18V7M3 7l9 6 9-6"></path>
-      </svg>
+<div class="sidebar">
+<span class="logo">S</span>
+<!-- <a class="logo-expand" href="#">TecnoLuminus</a> -->
+<div class="side-wrapper">
+<div class="side-title">MENU</div>
+<div class="side-menu">
+<a class="sidebar-link almacen is-active" href="#" onclick="openTab('almacen')">
+<svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 7V3h18v4M3 7v14h18V7M3 7l9 6 9-6"></path>
+</svg>
       
       
             Almacen
           </a>
-
-    <!-- Despacho -->
+<!-- Despacho -->
 <a class="sidebar-link despacho-tab" href="#" onclick="openTab('despacho')">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-    <path d="M22 12H2m10 10L2 12l10-10" />
-  </svg>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22 12H2m10 10L2 12l10-10"></path>
+</svg>
   Despacho
 </a>
-    
-    <!-- Salidas Mat -->
+<!-- Salidas Mat -->
 <a class="sidebar-link salidas-mat" href="#" onclick="openTab('salidas-mat')">
-  <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9 12h6m-6 4h6M4 6h16M4 6v14a2 2 0 002 2h12a2 2 0 002-2V6H4z"/>
-  </svg>
+<svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 12h6m-6 4h6M4 6h16M4 6v14a2 2 0 002 2h12a2 2 0 002-2V6H4z"></path>
+</svg>
   Salidas Mat
 </a>
-
-
 <!-- Campo Reporte -->
 <a class="sidebar-link streaming-tab" href="#" onclick="openTab('streaming')">
-  <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4.93 4.93a10.004 10.004 0 0114.14 0M7.76 7.76a6 6 0 018.48 0M10.59 10.59a2 2 0 012.82 0M12 20v.01" />
-  </svg>
+<svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.93 4.93a10.004 10.004 0 0114.14 0M7.76 7.76a6 6 0 018.48 0M10.59 10.59a2 2 0 012.82 0M12 20v.01"></path>
+</svg>
   Campo Reporte
 </a>
-
-
 <!-- Monitor Cuadrillas -->
 <a class="sidebar-link monitor-cuadrillas" href="#" onclick="openTab('monitor-cuadrillas')">
-  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" height="24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3 3l18 6-9 6-9-6v6l9 6 9-6" />
-  </svg>
+<svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 3l18 6-9 6-9-6v6l9 6 9-6"></path>
+</svg>
   Monitor Cuadrillas
 </a>
-
 <a class="sidebar-link monitor-censo" href="#" onclick="openTab('monitor-censo')">
-  <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M3 3H21V21H3V3Z" stroke="white" stroke-width="2"/>
-  </svg>
+<svg fill="currentColor" viewbox="0 0 24 24">
+<path d="M3 3H21V21H3V3Z" stroke="white" stroke-width="2"></path>
+</svg>
   Monitor Censo
 </a>
-
 <!-- Trabajos Campo -->
 <a class="sidebar-link trabajos-campo" href="#" onclick="openTab('trabajos-campo')">
-  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" height="24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9 17v-2a4 4 0 00-4-4H3m6 6h6M21 7l-3-3-4 4 3 3 4-4z" />
-  </svg>
+<svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 17v-2a4 4 0 00-4-4H3m6 6h6M21 7l-3-3-4 4 3 3 4-4z"></path>
+</svg>
   Trabajos Campo
 </a>
-
-
-
-
-
-
-    
-   </div>
-  </div>
-  <div class="side-wrapper">
-   
-   <div class="side-menu">
-   
-    
-    
-   </div>
-  </div>
- </div>
- <div class="wrapper">
-  <div class="header">
-   
-   <div class="user-settings">
-    <!-- <img class="user-img" src="tt.png" alt="">
-    <div class="user-name">TecnoLuminus</div> -->
-    <svg viewBox="0 0 492 492" fill="currentColor">
-     <path d="M484.13 124.99l-16.11-16.23a26.72 26.72 0 00-19.04-7.86c-7.2 0-13.96 2.79-19.03 7.86L246.1 292.6 62.06 108.55c-5.07-5.06-11.82-7.85-19.03-7.85s-13.97 2.79-19.04 7.85L7.87 124.68a26.94 26.94 0 000 38.06l219.14 219.93c5.06 5.06 11.81 8.63 19.08 8.63h.09c7.2 0 13.96-3.57 19.02-8.63l218.93-219.33A27.18 27.18 0 00492 144.1c0-7.2-2.8-14.06-7.87-19.12z"></path>
-    </svg>
-    <div class="notify">
-     <div class="notification"></div>
-     <svg viewBox="0 0 24 24" fill="currentColor">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M18.707 8.796c0 1.256.332 1.997 1.063 2.85.553.628.73 1.435.73 2.31 0 .874-.287 1.704-.863 2.378a4.537 4.537 0 01-2.9 1.413c-1.571.134-3.143.247-4.736.247-1.595 0-3.166-.068-4.737-.247a4.532 4.532 0 01-2.9-1.413 3.616 3.616 0 01-.864-2.378c0-.875.178-1.682.73-2.31.754-.854 1.064-1.594 1.064-2.85V8.37c0-1.682.42-2.781 1.283-3.858C7.861 2.942 9.919 2 11.956 2h.09c2.08 0 4.204.987 5.466 2.625.82 1.054 1.195 2.108 1.195 3.745v.426zM9.074 20.061c0-.504.462-.734.89-.833.5-.106 3.545-.106 4.045 0 .428.099.89.33.89.833-.025.48-.306.904-.695 1.174a3.635 3.635 0 01-1.713.731 3.795 3.795 0 01-1.008 0 3.618 3.618 0 01-1.714-.732c-.39-.269-.67-.694-.695-1.173z" />
-     </svg>
-    </div>
-   </div>
-  </div>
-  <div class="main-container almacen-container">
-    
-    <div class="main-header anim" style="--delay: 0s"><img class="user-img" src="tt.png" alt="">Almacen</div>
-    <div class="button-container">
-      <button id="entregadoButton" class="btn btn-primary">Movimientos</button>
-     <!-- In the button-container div -->
-
-     <button id="btn-update-restock" class="btn btn-primary">Actualizar / Agregar</button>
-
- 
-      
-      
-    
-
-</button>
-
-      
-
-    </div>
-    
-    <div id="entregadoModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span><img class="user-img" src="tt.png" alt="">
-        <h2>Salidas/Regresos de Material</h2>
-        <div class="tab-container">
-          <button class="tab-link active" data-tab="entregadoTable">Entregado</button>
-          <button class="tab-link" data-tab="regresoTable">Regreso</button>
-        </div>
-        <div class="tab-content active" id="entregadoTableContainer">
-          <table id="entregadoTable" class="display" style="width:100%">
-            <thead>
-              <tr>
-                <th>Codigo Recib</th>
-                <th>Descripcion</th>
-                <th>Cuadrilla Name</th>
-                <th>Fecha Recib</th>
-                <th>Folio Recep</th>
-                <th>Cantidad Recib</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div class="tab-content" id="regresoTableContainer">
-          <table id="regresoTable" class="display" style="width:100%">
-            <thead>
-              <tr>
-                <th>Cod Reg</th>
-                <th>Folio Reg</th>
-                <th>Fecha Reg</th>
-                <th>Cantidad Reg</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-<!-- Update/Restock Modal -->
-<div id="updateRestockModal" class="modal2">
-  <div class="modal2-content">
-    <span class="close">&times;</span>
-    <h2><img class="user-img" src="tt.png" alt="">Actualiza/Añade Material</h2>
-    <form id="updateRestockForm">
-      <input type="text" id="materialId" placeholder="ID del material" required>
-      <input type="text" id="materialDesc" placeholder="Descripción" required>
-      <input type="text" id="materialUM" placeholder="Unidad de medida" required>
-      <input type="number" id="quantity" placeholder="Cantidad a agregar" required>
-      <button type="submit">Actualizar</button>
-    </form>
-  </div>
 </div>
-   
-    
-    
-    <table id="almacenTable" class="display" style="width:100%">
-      <thead>
-        <tr>
-          <th>CodMat</th>
-          <th>Descripcion</th>
-          <th>UM</th>
-          <th>Stock Actual</th>
-          <!-- <th>FechaReg</th>
+</div>
+<div class="side-wrapper">
+<div class="side-menu">
+</div>
+</div>
+</div>
+<div class="wrapper">
+<div class="header">
+<div class="user-settings">
+<!-- <img class="user-img" src="tt.png" alt="">
+    <div class="user-name">TecnoLuminus</div> -->
+<svg fill="currentColor" viewbox="0 0 492 492">
+<path d="M484.13 124.99l-16.11-16.23a26.72 26.72 0 00-19.04-7.86c-7.2 0-13.96 2.79-19.03 7.86L246.1 292.6 62.06 108.55c-5.07-5.06-11.82-7.85-19.03-7.85s-13.97 2.79-19.04 7.85L7.87 124.68a26.94 26.94 0 000 38.06l219.14 219.93c5.06 5.06 11.81 8.63 19.08 8.63h.09c7.2 0 13.96-3.57 19.02-8.63l218.93-219.33A27.18 27.18 0 00492 144.1c0-7.2-2.8-14.06-7.87-19.12z"></path>
+</svg>
+<div class="notify">
+<div class="notification"></div>
+<svg fill="currentColor" viewbox="0 0 24 24">
+<path clip-rule="evenodd" d="M18.707 8.796c0 1.256.332 1.997 1.063 2.85.553.628.73 1.435.73 2.31 0 .874-.287 1.704-.863 2.378a4.537 4.537 0 01-2.9 1.413c-1.571.134-3.143.247-4.736.247-1.595 0-3.166-.068-4.737-.247a4.532 4.532 0 01-2.9-1.413 3.616 3.616 0 01-.864-2.378c0-.875.178-1.682.73-2.31.754-.854 1.064-1.594 1.064-2.85V8.37c0-1.682.42-2.781 1.283-3.858C7.861 2.942 9.919 2 11.956 2h.09c2.08 0 4.204.987 5.466 2.625.82 1.054 1.195 2.108 1.195 3.745v.426zM9.074 20.061c0-.504.462-.734.89-.833.5-.106 3.545-.106 4.045 0 .428.099.89.33.89.833-.025.48-.306.904-.695 1.174a3.635 3.635 0 01-1.713.731 3.795 3.795 0 01-1.008 0 3.618 3.618 0 01-1.714-.732c-.39-.269-.67-.694-.695-1.173z" fill-rule="evenodd"></path>
+</svg>
+</div>
+</div>
+</div>
+<div class="main-container almacen-container">
+<div class="main-header anim" style="--delay: 0s"><img alt="" class="user-img" src="tt.png"/>Almacen</div>
+<div class="button-container">
+<button class="btn btn-primary" id="entregadoButton">Movimientos</button>
+<!-- In the button-container div -->
+<button class="btn btn-primary" id="btn-update-restock">Actualizar / Agregar</button>
+</div>
+<div class="modal" id="entregadoModal">
+<div class="modal-content">
+<span class="close">×</span><img alt="" class="user-img" src="tt.png"/>
+<h2>Salidas/Regresos de Material</h2>
+<div class="tab-container">
+<button class="tab-link active" data-tab="entregadoTable">Entregado</button>
+<button class="tab-link" data-tab="regresoTable">Regreso</button>
+</div>
+<div class="tab-content active" id="entregadoTableContainer">
+<table class="display" id="entregadoTable" style="width:100%">
+<thead>
+<tr>
+<th>Codigo Recib</th>
+<th>Descripcion</th>
+<th>Cuadrilla Name</th>
+<th>Fecha Recib</th>
+<th>Folio Recep</th>
+<th>Cantidad Recib</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+<div class="tab-content" id="regresoTableContainer">
+<table class="display" id="regresoTable" style="width:100%">
+<thead>
+<tr>
+<th>Cod Reg</th>
+<th>Folio Reg</th>
+<th>Fecha Reg</th>
+<th>Cantidad Reg</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Update/Restock Modal -->
+<div class="modal2" id="updateRestockModal">
+<div class="modal2-content">
+<span class="close">×</span>
+<h2><img alt="" class="user-img" src="tt.png"/>Actualiza/Añade Material</h2>
+<form id="updateRestockForm">
+<input id="materialId" placeholder="ID del material" required="" type="text"/>
+<input id="materialDesc" placeholder="Descripción" required="" type="text"/>
+<input id="materialUM" placeholder="Unidad de medida" required="" type="text"/>
+<input id="quantity" placeholder="Cantidad a agregar" required="" type="number"/>
+<button type="submit">Actualizar</button>
+</form>
+</div>
+</div>
+<table class="display" id="almacenTable" style="width:100%">
+<thead>
+<tr>
+<th>CodMat</th>
+<th>Descripcion</th>
+<th>UM</th>
+<th>Stock Actual</th>
+<!-- <th>FechaReg</th>
           <th>CantidadReg</th>
           <th>Extra</th> -->
-          
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    
-    
-  </div>
- 
-
-
-
-
-  <!-- <div class="main-container despacho-container" style="display: none;"></div> -->
-  <div id="despacho" class="tab-content" style="display: none;">
-    <div class="main-header"><img class="user-img" src="tt.png" alt="">Despacho de Material</div>
-  
-    <form id="despachoForm">
-      <label for="cuadrillaSelect">Selecciona Cuadrilla:</label>
-      <select id="cuadrillaSelect">
-        <option value="">Seleccione...</option>
-        <option value="Cuad1">Cuadrilla 1</option>
-        <option value="Cuad2">Cuadrilla 2</option>
-        <option value="Cuad3">Cuadrilla 3</option>
-      </select>
-  
-      <label for="materialSelect">Selecciona Material:</label>
-      <select id="materialSelect">
-        <option value="">Seleccione...</option>
-        <!-- Materials from Firebase will be loaded here -->
-      </select>
-  
-      <label for="cantidadMaterial">Cantidad:</label>
-      <input type="number" id="cantidadMaterial" min="1">
-  
-      <button type="button" id="addMaterial">Añadir Material</button>
-    </form>
-  
-    <h3>Lista de Materiales a Despachar</h3>
-    <table id="despachoTable">
-      <thead>
-        <tr>
-          <th>Cuadrilla</th>
-          <th>Material</th>
-          <th>Descripcion</th>
-          <th>Cantidad</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  
-    <button id="dispatchMaterials">Despachar</button>
-  </div>
-  
-  
-
-  <div class="main-container salidas-mat-container" style="display: none;">
-    <div class="main-header anim" style="--delay: 0s"><img class="user-img" src="tt.png" alt="">Salidas Mat</div>
-    <table id="salidasMatTable" class="display" style="width:100%">
-      <thead>
-        <tr>
-          <th>CodMat</th>
-          <th>CantRecib</th>
-          <th>FechaRecib</th>
-          <th>Cuadrilla</th>
-          <th>FolioRecep</th>
-          <!-- <th>Unidad</th> -->
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-  
-  <div class="main-container streaming-container" style="display: none;">
-    <div class="button-container">
-      <!-- Button to open combined evidencias -->
-<button id="combinedEvidenciasButton" class="btn btn-primary">Ver Evidencias (Inicial + Final)</button>
-    </div>
-
-  <!-- Dispatch Modal -->
-<div id="dispatchModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2><img class="user-img" src="tt.png" alt="">Despacho de Material</h2>
-
-    <form id="dispatchForm">
-      <label for="dispatchMaterialId">CodMat:</label>
-      <input type="text" id="dispatchMaterialId" readonly>
-
-      <label for="dispatchDescription">Descripción:</label>
-      <input type="text" id="dispatchDescription" readonly>
-
-      <label for="dispatchUM">Unidad de Medida (UM):</label>
-      <input type="text" id="dispatchUM" readonly>
-
-      <label for="dispatchAvailableQty">Stock Actual:</label>
-      <input type="text" id="dispatchAvailableQty" readonly>
-
-      <label for="dispatchCuadrilla">Seleccione Cuadrilla:</label>
-      <select id="dispatchCuadrilla" required>
-        <option value="">Seleccione...</option>
-        <option value="cuadrilla1">Cuadrilla 1</option>
-        <option value="cuadrilla2">Cuadrilla 2</option>
-        <option value="cuadrilla3">Cuadrilla 3</option>
-        <option value="cuadrilla4">Cuadrilla 4</option>
-      </select>
-
-      <label for="dispatchCantidad">Cantidad a Despachar:</label>
-      <input type="number" id="dispatchCantidad" required min="1">
-
-      <button type="submit" class="btn btn-primary">Confirmar Despacho</button>
-    </form>
-  </div>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
 </div>
-
-    
-  <!-- Modal for combined evidencias -->
-  <div id="combinedEvidenciasModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Evidencias Inicial & Final</h2>
-      
-      <!-- Your search field -->
-      <div style="margin-bottom: 1rem;">
-        <input type="text" id="searchEvidencia" placeholder="Search folio..." />
-      </div>
-      
-      <!-- The one-and-only combinedGallery! -->
-      <div id="combinedGallery" class="gallery-container"></div>
-      
-      <div id="paginationControls" style="text-align: center; margin-top: 1rem;"></div>
-    </div>
-  </div>
-  
-    
-    
-   <!-- Full Image Modal (already in your code) -->
-<div id="fullImageModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <img src="" alt="Full-size" style="width:100%;height:auto;" />
-  </div>
+<!-- <div class="main-container despacho-container" style="display: none;"></div> -->
+<div class="tab-content" id="despacho" style="display: none;">
+<div class="main-header"><img alt="" class="user-img" src="tt.png"/>Despacho de Material</div>
+<form id="despachoForm">
+<label for="cuadrillaSelect">Selecciona Cuadrilla:</label>
+<select id="cuadrillaSelect">
+<option value="">Seleccione...</option>
+<option value="Cuad1">Cuadrilla 1</option>
+<option value="Cuad2">Cuadrilla 2</option>
+<option value="Cuad3">Cuadrilla 3</option>
+<option value="Cuad4">Cuadrilla 4</option>
+<option value="Cuad5">Cuadrilla 5</option>
+<option value="Cuad6">Cuadrilla 6</option>
+</select>
+<label for="materialSelect">Selecciona Material:</label>
+<select id="materialSelect">
+<option value="">Seleccione...</option>
+<!-- Materials from Firebase will be loaded here -->
+</select>
+<label for="cantidadMaterial">Cantidad:</label>
+<input id="cantidadMaterial" min="1" type="number"/>
+<button id="addMaterial" type="button">Añadir Material</button>
+</form>
+<h3>Lista de Materiales a Despachar</h3>
+<table id="despachoTable">
+<thead>
+<tr>
+<th>Cuadrilla</th>
+<th>Material</th>
+<th>Descripcion</th>
+<th>Cantidad</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<button id="dispatchMaterials">Despachar</button> 
+<!-- <button class="btn btn-secondary" id="generatePDFBtn" type="button"> Orden</button> -->
 </div>
-
-     
-  
-  
-
-    <div class="main-header anim" style="--delay: 0s"><img class="user-img" src="tt.png" alt="">Campo Reporte</div>
-
-    <div id="map" class="map-container" ></div>
-  
-    <table id="circuitoTable" class="display table-striped" style="width:100%;">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>FolioRep</th>
-          <th>FechaCreacion</th>
-          <th>Municipio</th>
-          <th>Origen</th>
-          <th>AsignadoA</th>      
-          <th>Comentarios</th>
-          <th>Acciones</th>
-  
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-   </div>
-
-  <!-- Assign Cuadrilla Modal -->
+<div class="main-container salidas-mat-container" style="display: none;">
+<div class="main-header anim" style="--delay: 0s"><img alt="" class="user-img" src="tt.png"/>Salidas Mat</div>
+<table class="display" id="salidasMatTable" style="width:100%">
+<thead>
+<tr>
+<th>CodMat</th>
+<th>CantRecib</th>
+<th>FechaRecib</th>
+<th>Cuadrilla</th>
+<th>FolioRecep</th>
+<!-- <th>Unidad</th> -->
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+<div class="main-container streaming-container" style="display: none;">
+<div class="button-container">
+<!-- Button to open combined evidencias -->
+<button class="btn btn-primary" id="combinedEvidenciasButton">Ver Evidencias (Inicial + Final)</button>
+</div>
+<!-- Dispatch Modal -->
+<div class="modal" id="dispatchModal">
+<div class="modal-content">
+<span class="close">×</span>
+<h2><img alt="" class="user-img" src="tt.png"/>Despacho de Material</h2>
+<form id="dispatchForm">
+<label for="dispatchMaterialId">CodMat:</label>
+<input id="dispatchMaterialId" readonly="" type="text"/>
+<label for="dispatchDescription">Descripción:</label>
+<input id="dispatchDescription" readonly="" type="text"/>
+<label for="dispatchUM">Unidad de Medida (UM):</label>
+<input id="dispatchUM" readonly="" type="text"/>
+<label for="dispatchAvailableQty">Stock Actual:</label>
+<input id="dispatchAvailableQty" readonly="" type="text"/>
+<label for="dispatchCuadrilla">Seleccione Cuadrilla:</label>
+<select id="dispatchCuadrilla" required="">
+<option value="">Seleccione...</option>
+<option value="cuadrilla1">Cuadrilla 1</option>
+<option value="cuadrilla2">Cuadrilla 2</option>
+<option value="cuadrilla3">Cuadrilla 3</option>
+<option value="cuadrilla4">Cuadrilla 4</option>
+</select>
+<label for="dispatchCantidad">Cantidad a Despachar:</label>
+<input id="dispatchCantidad" min="1" required="" type="number"/>
+<button class="btn btn-primary" type="submit">Confirmar Despacho</button>
+</form>
+</div>
+</div>
+<!-- Modal for combined evidencias -->
+<div class="modal" id="combinedEvidenciasModal">
+<div class="modal-content">
+<span class="close">×</span>
+<h2>Evidencias Inicial &amp; Final</h2>
+<!-- Your search field -->
+<div style="margin-bottom: 1rem;">
+<input id="searchEvidencia" placeholder="Search folio..." type="text"/>
+</div>
+<!-- The one-and-only combinedGallery! -->
+<div class="gallery-container" id="combinedGallery"></div>
+<div id="paginationControls" style="text-align: center; margin-top: 1rem;"></div>
+</div>
+</div>
+<!-- Full Image Modal (already in your code) -->
+<div class="modal" id="fullImageModal">
+<div class="modal-content">
+<span class="close">×</span>
+<img alt="Full-size" src="" style="width:100%;height:auto;"/>
+</div>
+</div>
+<div class="main-header anim" style="--delay: 0s"><img alt="" class="user-img" src="tt.png"/>Campo Reporte</div>
+<div class="map-container" id="map"></div>
+<table class="display table-striped" id="circuitoTable" style="width:100%;">
+<thead>
+<tr>
+<th>ID</th>
+<th>FolioRep</th>
+<th>FechaCreacion</th>
+<th>Municipio</th>
+<th>Origen</th>
+<th>AsignadoA</th>
+<th>Comentarios</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
 <!-- Assign Cuadrilla Modal -->
-<div id="assignCuadrillaModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2><img class="user-img" src="tt.png" alt="">Asignar Cuadrilla</h2>
-
-    <form id="assignCuadrillaForm">
-      <label for="selectedFolio">Folio Reporte:</label>
-      <input type="text" id="selectedFolio" readonly>
-
-      <label for="assignSelectCuadrilla">Seleccione Cuadrilla:</label>
-      <select id="assignSelectCuadrilla" required>
-        <option value="">Seleccione...</option>
-        <option value="Cuad1">Cuad1</option>
-        <option value="Cuad2">Cuad2</option>
-        <option value="Cuad3">Cuad3</option>
-        <option value="Cuad4">Cuad4</option>
-      </select>
-
-      <button type="submit" class="btn btn-primary">Asignar</button>
-    </form>
-  </div>
+<!-- Assign Cuadrilla Modal -->
+<div class="modal" id="assignCuadrillaModal">
+<div class="modal-content">
+<span class="close">×</span>
+<h2><img alt="" class="user-img" src="tt.png"/>Asignar Cuadrilla</h2>
+<form id="assignCuadrillaForm">
+<label for="selectedFolio">Folio Reporte:</label>
+<input id="selectedFolio" readonly="" type="text"/>
+<label for="assignSelectCuadrilla">Seleccione Cuadrilla:</label>
+<select id="assignSelectCuadrilla" required="">
+<option value="">Seleccione...</option>
+<option value="Cuad1">Cuad1</option>
+<option value="Cuad2">Cuad2</option>
+<option value="Cuad3">Cuad3</option>
+<option value="Cuad4">Cuad4</option>
+</select>
+<button class="btn btn-primary" type="submit">Asignar</button>
+</form>
 </div>
-
-<div id="trabajos-campo" class="tab-content" style="display: none;">
-  <div class="main-header anim" style="--delay: 0s">
-    <img class="user-img" src="tt.png" alt="">Trabajos en Campo
-  </div>
-
-  <table id="trabajosCampoTable" class="display" style="width:100%;">
-    <thead>
-      <tr>
-        <th>Folio Reporte</th>
-        <th>Causa de Falla</th>
-        <th>Responsable</th>
-        <th>Trabajo Realizado</th>
-        <th>Fecha Atendido</th>
-        <th>Firma</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
 </div>
-
-
-
-
-  <div id="monitor-cuadrillas" class="tab-content" style="display: none;">
-    <iframe src="index_mt.html" id="monitorCuadrillasFrame" width="100%" height="800px" style="border:none;"></iframe>
+<div class="tab-content" id="trabajos-campo" style="display: none;">
+<div class="main-header anim" style="--delay: 0s">
+<img alt="" class="user-img" src="tt.png"/>Trabajos en Campo
   </div>
-   
-  <div id="monitor-censo" class="tab-content" style="display: none;">
-    <iframe src="index_censov2.html" id="monitorCensoFrame"
-    style="width: 100%; height: 500px; border: none;"></iframe>
-  </div>
-  
-  
-   <div class="stream-area">
-    
-    
-   </div>
-  </div>
- </div>
+<table class="display" id="trabajosCampoTable" style="width:100%;">
+<thead>
+<tr>
+<th>Folio Reporte</th>
+<th>Causa de Falla</th>
+<th>Responsable</th>
+<th>Trabajo Realizado</th>
+<th>Fecha Atendido</th>
+<th>Firma</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
 </div>
-
- <!-- Google Maps API -->
- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvhXkpjn3NIKaTnuL3X_W-IMty4urq2MA"></script>
- <!-- Firebase App (compatibility mode) -->
- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics-compat.js"></script>
- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
-
- <!-- jQuery -->
- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
- <!-- DataTables JS -->
- <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
- <!-- Video.js -->
- <script src="https://vjs.zencdn.net/5-unsafe/video.js"></script>
- <!-- Scripts -->
+<div class="tab-content" id="monitor-cuadrillas" style="display: none;">
+<iframe height="800px" id="monitorCuadrillasFrame" src="index_mt.html" style="border:none;" width="100%"></iframe>
+</div>
+<div class="tab-content" id="monitor-censo" style="display: none;">
+<iframe id="monitorCensoFrame" src="index_censov2.html" style="width: 100%; height: 500px; border: none;"></iframe>
+</div>
+<div class="stream-area">
+</div>
+</div>
+</div>
+<!-- Google Maps API -->
+<script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvhXkpjn3NIKaTnuL3X_W-IMty4urq2MA"></script>
+<!-- Firebase App (compatibility mode) -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- Video.js -->
+<script src="https://vjs.zencdn.net/5-unsafe/video.js"></script>
+<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 <!-- <script src="./script.js"></script>
 <script src="./scriptv3.js"></script>  -->
-
 <script>
   const firebaseConfig3 = {
     // ⚠️ Replace with your own Firebase config
@@ -2998,8 +2900,6 @@ button.vjs-play-control.vjs-control.vjs-button {
 
  
 </script>
-
-
 <script>
   // Correct Firebase configuration for WorkDone bucket
   const firebaseConfig1 = {
@@ -3073,8 +2973,6 @@ button.vjs-play-control.vjs-control.vjs-button {
   
   
   </script>
-  
-
 <script>
   // Firebase reference
   const workDoneRef = firebase.database().ref("WorkDone");
@@ -3165,17 +3063,6 @@ button.vjs-play-control.vjs-control.vjs-button {
   });
   
   </script>
-  
-
-
-
-  
-  
-
-
- 
-    
-
 <script>
   // This function sets the iframe’s height = the scrollHeight of its content
   function autoResizeCensoFrame() {
@@ -3203,11 +3090,6 @@ button.vjs-play-control.vjs-control.vjs-button {
     });
   });
 </script>
-
-
-
-
-
 <script>
   // Some globals for pagination
   let allEvidencias = [];
@@ -3298,6 +3180,52 @@ function gotoPage(pageNumber) {
 
 </script>
 <script>
+  function generatePDF(materialList) {
+    if (!materialList || materialList.length === 0) {
+      alert("No hay materiales para generar el reporte.");
+      return;
+    }
+  
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+  
+    doc.setFontSize(16);
+    doc.text("Tecnoluminus Reporte Almacen / Salida de Material", 20, 20);
+  
+    doc.setFontSize(12);
+    doc.text("Cuadrilla: " + materialList[0].cuadrilla, 20, 30);
+  
+    const now = new Date();
+    const timestamp = now.toLocaleString("es-MX");
+    doc.text("Fecha y Hora del Despacho: " + timestamp, 20, 38);
+    
+  
+    const rows = materialList.map(m => [m.desc, m.cantidad]);
+    doc.autoTable({
+      head: [['Material', 'Cantidad']],
+      body: rows,
+      startY: 48,
+    });
+  
+    const pageHeight = doc.internal.pageSize.height;
+    doc.text("__________________________", 20, pageHeight - 40);
+    doc.text("__________________________", 120, pageHeight - 40);
+    doc.text("Jefe de Almacén", 35, pageHeight - 25);
+    doc.text("Recibe", 150, pageHeight - 25);
+  
+    doc.save(`ReporteDespacho_${Date.now()}.pdf`);
+  }
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    const generateBtn = document.getElementById("generatePDFBtn");
+    if (generateBtn) {
+      generateBtn.addEventListener("click", function () {
+        generatePDF(window.materialList || []);
+      });
+    }
+  });
+  </script>
+<script>
   document.addEventListener("DOMContentLoaded", function() {
     // Example: if you want a link to open the "monitor-cuadrillas" tab
     let monitorCuadrillasLink = document.querySelector('.sidebar-link.monitor-cuadrillas');
@@ -3336,11 +3264,9 @@ function gotoPage(pageNumber) {
     }
   }
 </script>
-
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    let materialList = [];
+    window.window.window.window.materialList = [];
     let materialLookup = {}; // key => {Descripcion, CantidadActual, ...}
 
 
@@ -3373,7 +3299,7 @@ function gotoPage(pageNumber) {
       // Grab the description from our lookup
   const desc = materialLookup[material]?.Descripcion || "(Sin descripción)";
 
-      materialList.push({ cuadrilla, material, desc, cantidad });
+      window.window.window.materialList.push({ cuadrilla, material, desc, cantidad });
 
       updateTable();
     });
@@ -3382,7 +3308,7 @@ function gotoPage(pageNumber) {
     function updateTable() {
       const tableBody = document.querySelector("#despachoTable tbody");
       tableBody.innerHTML = "";
-      materialList.forEach((item, index) => {
+      window.window.window.materialList.forEach((item, index) => {
         tableBody.innerHTML += `
           <tr>
             <td>${item.cuadrilla}</td>
@@ -3397,16 +3323,101 @@ function gotoPage(pageNumber) {
 
     // Remove item from the list
     window.removeItem = function (index) {
-      materialList.splice(index, 1);
+      window.window.window.materialList.splice(index, 1);
       updateTable();
     };
 
-    // Dispatch materials to Cuadrilla_Material
     document.getElementById("dispatchMaterials").addEventListener("click", function () {
-      if (materialList.length === 0) {
-        alert("No hay materiales en la lista.");
-        return;
-      }
+  if (window.materialList.length === 0) {
+    alert("No hay materiales en la lista.");
+    return;
+  }
+
+  const dispatchRef = firebase.database().ref("Cuadrilla_Material");
+  const now = new Date();
+  const formattedDate = formatDateTime(now); // ✅ Use consistent date
+  const sharedFolio = `D-${now.getTime()}`;
+
+  // Save timestamp to PrintReports
+  const reportRef = firebase.database().ref("PrintReports").push();
+  const reportKey = reportRef.key;
+
+  const cuadrillaName = window.materialList[0].cuadrilla;
+  const reportData = {
+    reportId: sharedFolio,
+    timestamp: formattedDate,
+    cuadrilla: cuadrillaName
+  };
+
+  reportRef.set(reportData).then(() => {
+    // Save materials + update stock
+    window.materialList.forEach((item) => {
+      item.folio = sharedFolio;
+
+      dispatchRef.push({
+        CuadrillaName: item.cuadrilla,
+        codigo_recib: item.material,
+        CantidadRecib: item.cantidad,
+        FechaRecib: formattedDate, // ✅ Use correct format
+        folio_recep: sharedFolio
+      });
+
+      const materialRef = firebase.database().ref(`ADMIN_MATERIAL/${item.material}`);
+      materialRef.once("value").then((snapshot) => {
+        const currentStock = parseFloat(snapshot.val().CantidadActual || 0);
+        materialRef.update({ CantidadActual: currentStock - item.cantidad });
+      });
+    });
+
+    // ✅ Generate PDF once logo loads
+    const img = new Image();
+    img.src = "tt.png"; // Ensure tt.png is in same folder, served via http
+    img.crossOrigin = "Anonymous";
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      const logoBase64 = canvas.toDataURL("image/png");
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.addImage(logoBase64, 'PNG', 20, 10, 25, 25);
+      doc.setFontSize(16);
+      doc.text("Tecnoluminus Reporte Almacen / Salida de Material", 50, 35); // moved down
+
+      doc.setFontSize(12);
+      doc.text("Cuadrilla: " + reportData.cuadrilla, 20, 45);
+      doc.text("Folio de Orden: " + sharedFolio, 20, 53);
+      doc.text("Fecha y Hora del Despacho: " + reportData.timestamp, 20, 61);
+
+
+      const rows = window.materialList.map(m => [m.desc, m.cantidad]);
+      doc.autoTable({
+        head: [['Material', 'Cantidad']],
+        body: rows,
+        startY: 70
+      });
+
+      const pageHeight = doc.internal.pageSize.height;
+      doc.text("__________________________", 20, pageHeight - 40);
+      doc.text("__________________________", 120, pageHeight - 40);
+      doc.text("Jefe de Almacén", 35, pageHeight - 25);
+      doc.text("Recibe", 150, pageHeight - 25);
+
+      doc.save(`ReporteDespacho_${sharedFolio}.pdf`);
+
+      // Final cleanup
+      window.materialList = [];
+      updateTable();
+      alert("Material despachado correctamente.");
+    };
+  });
+});
+
+
       
       // 1) Create a helper function (near the top of your <script> or in a utilities file)
 function formatDateTime(dateObj) {
@@ -3422,7 +3433,7 @@ function formatDateTime(dateObj) {
 
       const dispatchRef = firebase.database().ref("Cuadrilla_Material");
 
-      materialList.forEach((item) => {
+      window.window.window.materialList.forEach((item) => {
         dispatchRef.push({
           CuadrillaName: item.cuadrilla,
           codigo_recib: item.material,
@@ -3440,15 +3451,13 @@ function formatDateTime(dateObj) {
         });
       });
 
-      alert("Material despachado correctamente.");
-      materialList = [];
-      updateTable();
+      window.window.window.materialList = [];
+updateTable();
+//generatePDF(window.window.window.materialList);
+//alert("Material despachado correctamente.");
     });
-  });
+ 
 </script>
-
-
-
 <script>
   function openTab(tabId) {
     // Hide all tab contents
@@ -3469,9 +3478,7 @@ function formatDateTime(dateObj) {
 }
 
 </script>
-
-
- <script>
+<script>
   // Load Evidencias functionality from v3
   document.querySelector('.evidencias-tab').addEventListener('click', () => {
     // Show the Evidencias tab
@@ -3498,9 +3505,6 @@ function formatDateTime(dateObj) {
     document.querySelector('#evidencias-container').classList.add('tableView');
   });
 </script>
-
-
-
 <!-- Script conexion firebase -->
 <script>
     // Firebase configuration and initialization
@@ -3837,93 +3841,111 @@ $("#confirmUpdateStock").click(function() {
   // Populate table and map with data
   function populateTableAndMap() {
   const bucketRef = firebase.database().ref("Reportes_test2");
+  const workDoneRef = firebase.database().ref("WorkDone");
 
-  bucketRef.on("value", (snapshot) => {
-    const data = snapshot.val();
-    table.clear(); // Clear DataTable
-    bucketMarkers.forEach((marker) => marker.setMap(null)); // Clear existing markers
-    bucketMarkers.length = 0;
+  // First, load WorkDone so we can cross-check
+  workDoneRef.once("value", (workSnap) => {
+    const workDoneData = workSnap.val() || {};
 
-    for (const key in data) {
-      const job = data[key];
-      const {
-        ID = "N/A",
-        FolioReporte = key,
-        FechaCreacion = "N/A",
-        Municipio = "N/A",
-        Origen = "N/A",
-        CuadrillaName = "N/A",
-        trabajo = "N/A",
-        TrabajoRealizado = null,
-        Latitud = null,
-        Longitud = null,
-      } = job;
+    bucketRef.once("value", (snapshot) => {
+      const data = snapshot.val();
+      table.clear();
+      bucketMarkers.forEach((marker) => marker.setMap(null));
+      bucketMarkers.length = 0;
 
-      // ✅ Add the row to the table
-      const row = table.row.add([
-        ID,
-        `<span class="folio-link" data-folio="${FolioReporte}">${FolioReporte}</span>`,
-        FechaCreacion,
-        Municipio,
-        Origen,
-        CuadrillaName,
-        trabajo,
-        `<button style="display: inline-block;
-            margin-top: 20px;
-            background-color: #3b82f6;
-            color: white;
-            padding: 10px 22px;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease;" 
-            class="assign-btn" data-folio="${FolioReporte}">Asignar</button>`
-      ]).draw(false); // false = don't redraw yet
+      for (const key in data) {
+        const job = data[key];
+        const {
+          ID = "N/A",
+          FolioReporte = key,
+          FechaCreacion = "N/A",
+          Municipio = "N/A",
+          Origen = "N/A",
+          CuadrillaName = "N/A",
+          trabajo = "N/A",
+          Latitud = null,
+          Longitud = null,
+        } = job;
 
-      // ✅ Highlight attended reports in green
-      const rowNode = row.node();
-      if (TrabajoRealizado && TrabajoRealizado.trim() !== "") {
-        $(rowNode).css("background-color", "#14532d"); // dark green
-        continue; // ⚠️ Skip marker creation only, not row insertion
-      }
+        // 🔍 Check if there's a matching report in WorkDone with TrabajoRealizado
+        let isAttended = false;
 
-      // ✅ Only create markers for reports that are NOT attended
-      if (Latitud && Longitud) {
-        let iconUrl = "lamp_Blink_Red.gif";
-        if (trabajo && trabajo.trim() !== "" && trabajo.toLowerCase() !== "cambiolamparas") {
-          iconUrl = "lamp_Blink_GreenOFF.png";
+// loop through WorkDone to see if any entry matches this FolioReporte
+for (const doneKey in workDoneData) {
+  const done = workDoneData[doneKey];
+  if (
+    done.folioReporte === FolioReporte &&
+    done.trabajoRealizado &&
+    done.trabajoRealizado.trim() !== ""
+  ) {
+    isAttended = true;
+    break;
+  }
+}
+
+if (isAttended) continue;
+
+
+        // ✅ Add the row to the table
+        const row = table.row.add([
+          ID,
+          `<span class="folio-link" data-folio="${FolioReporte}">${FolioReporte}</span>`,
+          FechaCreacion,
+          Municipio,
+          Origen,
+          CuadrillaName,
+          trabajo,
+          `<button style="display: inline-block;
+              margin-top: 20px;
+              background-color: #3b82f6;
+              color: white;
+              padding: 10px 22px;
+              border: none;
+              border-radius: 12px;
+              font-weight: bold;
+              cursor: pointer;
+              box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+              transition: background-color 0.3s ease;" 
+              class="assign-btn" data-folio="${FolioReporte}">Asignar</button>`
+        ]).draw(false);
+
+        // ✅ Only create marker if Lat/Lng present
+        if (Latitud && Longitud) {
+          let iconUrl = "lamp_Blink_Red.gif";
+          if (trabajo && trabajo.trim() !== "" && trabajo.toLowerCase() !== "cambiolamparas") {
+            iconUrl = "lamp_Blink_GreenOFF.png";
+          }
+
+          const icon = {
+            url: iconUrl,
+            scaledSize: new google.maps.Size(72, 72),
+          };
+
+          const marker = new google.maps.Marker({
+            position: { lat: parseFloat(Latitud), lng: parseFloat(Longitud) },
+            map: map,
+            title: `Reportes_test2 - ${trabajo}`,
+            icon: icon,
+            optimized: false,
+          });
+
+          markerMap[FolioReporte] = marker;
+
+          const infoWindowContent = getInfoWindowContent(FolioReporte, Municipio, trabajo);
+          marker.addListener("click", () => {
+            infoWindow.setContent(infoWindowContent);
+            infoWindow.open(map, marker);
+          });
+
+          bucketMarkers.push(marker);
         }
-
-        const icon = {
-          url: iconUrl,
-          scaledSize: new google.maps.Size(72, 72),
-        };
-
-        const marker = new google.maps.Marker({
-          position: { lat: parseFloat(Latitud), lng: parseFloat(Longitud) },
-          map: map,
-          title: `Reportes_test2 - ${trabajo}`,
-          icon: icon,
-          optimized: false,
-        });
-
-        markerMap[FolioReporte] = marker;
-
-        const infoWindowContent = getInfoWindowContent(FolioReporte, Municipio, trabajo);
-        marker.addListener("click", () => {
-          infoWindow.setContent(infoWindowContent);
-          infoWindow.open(map, marker);
-        });
-
-        bucketMarkers.push(marker);
       }
-    }
 
-    table.draw(); // Redraw after all rows are added
+      table.draw(); // Redraw DataTable
+    });
   });
 }
+
 
 
   // Zoom to marker when clicking on folio
@@ -4366,7 +4388,6 @@ galleryContainer.empty(); // Clear out old content
 });
   
 </script>
-
 <script>
   $(document).ready(function() {
     // ...
@@ -4459,9 +4480,6 @@ galleryContainer.empty(); // Clear out old content
     // ...
   });
 </script>
-
-
-
 <script>
   $(document).ready(function () {
   $("#dispatchForm").submit(function (event) {
@@ -4510,7 +4528,6 @@ galleryContainer.empty(); // Clear out old content
 });
 
 </script>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
   // Mode Switch Logic
@@ -4600,7 +4617,101 @@ galleryContainer.empty(); // Clear out old content
 });
 
 </script>
+<script>
+function generatePDF(materialList) {
+  if (!materialList || materialList.length === 0) {
+    alert("No hay materiales para generar el reporte.");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(16);
+  doc.text("Tecnoluminus Reporte Almacen / Salida de Material", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text("Cuadrilla: " + materialList[0].cuadrilla, 20, 35);
+  doc.text("Folio de Orden: " + materialList[0].folio, 20, 46);
 
 
-</body>
+  const rows = materialList.map(m => [m.desc, m.cantidad]);
+  doc.autoTable({
+    head: [['Material', 'Cantidad']],
+    body: rows,
+    startY: 45,
+  });
+
+  const pageHeight = doc.internal.pageSize.height;
+  doc.text("__________________________", 20, pageHeight - 40);
+  doc.text("__________________________", 120, pageHeight - 40);
+  doc.text("Jefe de Almacén", 35, pageHeight - 25);
+  doc.text("Recibe", 150, pageHeight - 25);
+
+  doc.save(`ReporteDespacho_${Date.now()}.pdf`);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const generateBtn = document.getElementById("generatePDFBtn");
+  if (generateBtn) {
+    generateBtn.addEventListener("click", function () {
+      generatePDF(window.materialList || []);
+    });
+  }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const generateBtn = document.getElementById("generatePDFBtn");
+
+  generateBtn.addEventListener("click", function () {
+    if (!window.materialList || window.materialList.length === 0) {
+      alert("No hay materiales para generar el reporte.");
+      return;
+    }
+
+    const timestamp = new Date().toLocaleString("es-MX");
+    const reportId = Date.now();
+    const cuadrillaName = window.materialList[0].cuadrilla;
+
+    // Save the report info to Firebase
+    const reportRef = firebase.database().ref("PrintReports").push();
+    const reportKey = reportRef.key;
+
+    reportRef.set({
+      reportId: reportId,
+      timestamp: timestamp,
+      cuadrilla: cuadrillaName
+    }).then(() => {
+      // Now generate the PDF with the timestamp from Firebase
+      firebase.database().ref("PrintReports/" + reportKey).once("value").then((snapshot) => {
+        const data = snapshot.val();
+        if (!data) return alert("No se pudo recuperar el reporte.");
+
+        const doc = new jspdf.jsPDF();
+        doc.setFontSize(16);
+        doc.text("Tecnoluminus Reporte Almacen / Salida de Material", 20, 20);
+        doc.setFontSize(12);
+        doc.text("Cuadrilla: " + data.cuadrilla, 20, 30);
+        doc.text("Fecha y Hora del Despacho: " + data.timestamp, 20, 38);
+
+        const rows = window.materialList.map(item => [item.desc, item.cantidad]);
+        doc.autoTable({
+          head: [['Material', 'Cantidad']],
+          body: rows,
+          startY: 45
+        });
+
+        const pageHeight = doc.internal.pageSize.height;
+        doc.text("__________________________", 20, pageHeight - 40);
+        doc.text("__________________________", 120, pageHeight - 40);
+        doc.text("Jefe de Almacén", 35, pageHeight - 25);
+        doc.text("Recibe", 150, pageHeight - 25);
+
+        doc.save(`ReporteDespacho_${reportId}.pdf`);
+      });
+    });
+  });
+});
+</script></body>
 </html>
