@@ -2495,6 +2495,48 @@ button.vjs-play-control.vjs-control.vjs-button {
   border-color: #3b82f6;
   outline: none;
 }
+#dispatchMaterials {
+  margin: 20px auto 0 auto;
+  display: block;
+  padding: 10px 24px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+#dispatchMaterials:hover {
+  background-color: #0056b3;
+}
+
+
+
+.tabla-scroll {
+  max-height: 350px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid #2a2a2a;
+  margin-bottom: 20px;
+  padding-bottom: 10px; /* ✅ Agrega esto */
+}
+
+
+/* Scrollbar estilo oscuro */
+.tabla-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.tabla-scroll::-webkit-scrollbar-track {
+  background: #1e1e2e;
+}
+.tabla-scroll::-webkit-scrollbar-thumb {
+  background-color: #4dc3fa;
+  border-radius: 4px;
+}
+
+
+
 
 /* Button */
 #assignCuadrillaModal .btn {
@@ -2515,8 +2557,131 @@ button.vjs-play-control.vjs-control.vjs-button {
   background-color: #2563eb;
 }
 
+#salidasMatTable thead.filters input {
+    width: 100%;
+    padding: 5px;
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  #almacenTable thead.filters input {
+  width: 100%;
+  padding: 5px;
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  font-size: 13px;
+}
+#salidasMatTable thead.filters th input {
+  font-size: 13px;
+  padding: 4px 6px;
+  background-color: #1e1e2e;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  width: auto;
+  min-width: 60px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+#almacenTable thead.filters th input {
+  width: 100%;
+  padding: 4px;
+  background-color: #1e1e2e;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+.stock-alert {
+  font-size: 11px;
+  background-color: #500;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+#cuadrillaStockTable {
+  width: 100%;
+  background-color: var(--video-bg);
+  border-radius: 10px;
+  color: #fff;
+}
+
+#cuadrillaStockTable th,
+#cuadrillaStockTable td {
+  text-align: left;
+  padding: 10px;
+}
+
+@keyframes fillBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--target-width, 100%);
+  }
+}
+#selectMunicipioStock,
+#selectCuadrillaStock {
+  background-color: #1e1e2e;
+  color: #ffffff;
+  border: 1px solid #4dc3fa;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  width: 200px;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+#selectMunicipioStock:hover,
+#selectCuadrillaStock:hover {
+  border-color: #1da1f2;
+  box-shadow: 0 0 5px #4dc3fa;
+}
+
+#selectMunicipioStock:focus,
+#selectCuadrillaStock:focus {
+  outline: none;
+  border-color: #1da1f2;
+  box-shadow: 0 0 5px #4dc3fa;
+}
+
+/* Footer fijo para Despacho */
+.dispatch-footer {
+  position: sticky;
+  bottom: 0;
+  background-color: #1f1d2b;
+  padding: 10px 0;
+  text-align: center;
+  z-index: 10;
+  border-top: 1px solid #333;
+}
+
+.dispatch-footer button {
+  padding: 10px 24px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.dispatch-footer button:hover {
+  background-color: #0056b3;
+}
+
 
   </style>
+  
 <style>
     body2 { font-family: Arial, sans-serif; background: #101827; color: white; padding: 40px; }
     .modal2 { display: none; position: fixed; top: 20%; left: 30%; width: 40%; background-color: #2a3653; padding: 20px; border-radius: 10px; z-index: 1000; }
@@ -2526,6 +2691,7 @@ button.vjs-play-control.vjs-control.vjs-button {
     .modal2-content .close { cursor: pointer; align-self: flex-end; font-size: 20px; font-weight: bold; color: white; }
    /* #btn-update-restock { padding: 10px 20px; font-size: 16px; background-color: #4dc3fa; border: none; border-radius: 6px; cursor: pointer; } */
   </style>
+  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script></head>
 <body>
 <!-- partial:index.partial.html -->
@@ -2556,8 +2722,20 @@ button.vjs-play-control.vjs-control.vjs-button {
 <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
 <path d="M9 12h6m-6 4h6M4 6h16M4 6v14a2 2 0 002 2h12a2 2 0 002-2V6H4z"></path>
 </svg>
-  Salidas Mat
+  Cuadrillas /Mat
 </a>
+
+<a class="sidebar-link stock-cuadrillas" href="#" onclick="openTab('stock-cuadrillas')">
+
+<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 12h18M3 6h18M3 18h18"></path>
+</svg>
+  Cuadrillas /MovsMat
+</a>
+
+
+
+
 
 </div>
 </div>
@@ -2582,8 +2760,50 @@ button.vjs-play-control.vjs-control.vjs-button {
 </div> -->
 </div>
 </div>
+
+<!-- stock material (already in your code) -->
+<div class="main-container stock-cuadrillas-container" id="stock-cuadrillas" style="display: none;border:none;
+    background-color: rgb(31 29 43);">
+
+
+  <div class="main-header">  <img class="user-img" src="tt.png" alt="">  Cuadrillas/MovsMat</div>
+  <div style="margin-bottom: 20px;">
+    <label>Municipio:</label>
+    <select id="selectMunicipioStock">
+      <option value="">Seleccione Municipio</option>
+      <option value="ESCOBEDO">ESCOBEDO</option>
+      <option value="LOS HERRERAS">LOS HERRERAS</option>
+      <option value="CIENEGA DE FLORES">CIENEGA DE FLORES</option>
+    </select>
+
+    <label>Cuadrilla:</label>
+    <select id="selectCuadrillaStock">
+      <option value="">Seleccione Cuadrilla</option>
+    </select>
+  </div>
+
+  <table id="cuadrillaStockTable" class="display" style="width:100%">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Material</th>
+        <th>Stock Disponible</th>
+        <th>Usado</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<!-- <div id="stock-cuadrillas" class="main-container stock-cuadrillas-container">
+  <h1>Stocks Cuadrillas</h1>
+  <p>✅ Esto es contenido visible dentro de la pestaña Stock Cuadrillas.</p>
+</div> -->
+
+
 <div class="main-container almacen-container">
-<div class="main-header anim" style="--delay: 0s"><img alt="" class="user-img" src="tt.png"/>Almacen</div>
+<div class="main-header anim" style="--delay: 0s"><img alt="" class="user-img" src="tt.png"/>  Almacen</div>
 <div class="button-container">
 <button class="btn btn-primary" id="entregadoButton">Movimientos</button>
 <!-- In the button-container div -->
@@ -2658,7 +2878,7 @@ button.vjs-play-control.vjs-control.vjs-button {
 </div>
 <!-- <div class="main-container despacho-container" style="display: none;"></div> -->
 <div class="tab-content" id="despacho" style="display: none;">
-<div class="main-header"><img alt="" class="user-img" src="tt.png"/>Despacho de Material</div>
+<div class="main-header"><img alt="" class="user-img" src="tt.png"/>  Despacho de Material</div>
 <form id="despachoForm">
 <label for="cuadrillaSelect">Selecciona Cuadrilla:</label>
 <select id="cuadrillaSelect">
@@ -2667,8 +2887,10 @@ button.vjs-play-control.vjs-control.vjs-button {
 <option value="Cuad2">Cuadrilla 2</option>
 <option value="Cuad3">Cuadrilla 3</option>
 <option value="Cuad4">Cuadrilla 4</option>
-<option value="Cuad5">Cuadrilla 5</option>
-<option value="Cuad6">Cuadrilla 6</option>
+<option value="Cuad1_ESC">Cuad1_ESC</option>
+<option value="Cuad2_ESC">Cuad2_ESC</option>
+<option value="Cuad1_HRR">Cuad1_HRR</option>
+<option value="Cuad2_HRR">Cuad2_HRR</option>
 </select>
 <label for="materialSelect">Selecciona Material:</label>
 <select id="materialSelect">
@@ -2680,35 +2902,48 @@ button.vjs-play-control.vjs-control.vjs-button {
 <button id="addMaterial" type="button">Añadir Material</button>
 </form>
 <h3>Lista de Materiales a Despachar</h3>
-<table id="despachoTable">
-<thead>
-<tr>
-<th>Cuadrilla</th>
-<th>Material</th>
-<th>Descripcion</th>
-<th>Cantidad</th>
-<th>Acción</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-<button id="dispatchMaterials">Despachar</button> 
+
+<div class="despacho tabla-scroll"> <!-- ✅ clase corregida -->
+  <table id="despachoTable">
+    <thead>
+      <tr>
+        <th>Cuadrilla</th>
+        <th>Material</th>
+        <th>Descripcion</th>
+        <th>Cantidad</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<!-- ✅ Botón fijo visible abajo -->
+<div class="dispatch-footer">
+  <button id="dispatchMaterials">Despachar</button>
+</div>
+
+
 <!-- <button class="btn btn-secondary" id="generatePDFBtn" type="button"> Orden</button> -->
 </div>
 <div class="main-container salidas-mat-container" style="display: none;">
-<div class="main-header anim" style="--delay: 0s"><img alt="" class="user-img" src="tt.png"/>Salidas Mat</div>
+<div class="main-header anim" style="--delay: 0s"><img alt="" class="user-img" src="tt.png"/>  Cuadrillas/Mat</div>
 <table class="display" id="salidasMatTable" style="width:100%">
-<thead>
-<tr>
-<th>CodMat</th>
-<th>CantRecib</th>
-<th>FechaRecib</th>
-<th>Cuadrilla</th>
-<th>FolioRecep</th>
-<!-- <th>Unidad</th> -->
-</tr>
-</thead>
-<tbody></tbody>
+  <thead>
+    <tr>
+      <th>CodMat</th>
+      <th>Descripcion</th>
+      <th>Cantidad</th>
+      <th>UM</th>
+      <th>Fecha</th>
+      <th>Cuadrilla</th>
+      <th>FolioRecep</th>
+    </tr>
+      </thead>
+  
+<tbody>
+  
+</tbody>
 </table>
 </div>
 <div class="main-container streaming-container" style="display: none;">
@@ -2766,6 +3001,10 @@ button.vjs-play-control.vjs-control.vjs-button {
 </div>
 </div>
 
+
+
+
+
 <div class="stream-area">
 </div>
 </div>
@@ -2784,6 +3023,9 @@ button.vjs-play-control.vjs-control.vjs-button {
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/rowgroup/1.3.1/js/dataTables.rowGroup.min.js"></script>
+<link href="https://cdn.datatables.net/rowgroup/1.3.1/css/rowGroup.dataTables.min.css" rel="stylesheet"/>
+
 <!-- Video.js -->
 <script src="https://vjs.zencdn.net/5-unsafe/video.js"></script>
 <!-- Scripts -->
@@ -2885,212 +3127,50 @@ button.vjs-play-control.vjs-control.vjs-button {
   
   
   </script>
+
 <script>
-  // Firebase reference
-  const workDoneRef = firebase.database().ref("WorkDone");
-
+  function showStockCuadrillasTab() {
+   
   
-  // Initialize DataTable
-  const trabajosCampoTable = $("#trabajosCampoTable").DataTable({
-    responsive: true,
-    autoWidth: false,
-    columns: [
-      { title: "Folio Reporte" },
-      { title: "Causa de Falla" },
-      { title: "Responsable" },
-      { title: "Trabajo Realizado" },
-      { title: "Fecha Atendido" },
-      { title: "Firma" },
-    ],
-    language: {
-      search: "Buscar:",
-      lengthMenu: "Mostrar _MENU_ registros",
-      info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-      paginate: {
-        first: "Primero",
-        last: "Último",
-        next: "Siguiente",
-        previous: "Anterior",
-      },
-    },
-  });
+    // Seleccionar automáticamente "ESCOBEDO" y "Cuad1"
+    const municipioSelect = document.getElementById("selectMunicipioStock");
+    const cuadrillaSelect = document.getElementById("selectCuadrillaStock");
   
-  // Correct and Debugged Load Function
-  function loadTrabajosCampoData() {
-  workDoneRef.on("value", (snapshot) => {
-    const data = snapshot.val();
-    trabajosCampoTable.clear();
-
-    if (data) {
-      console.log("✅ Correct Firebase Data Loaded:", data);
-
-      Object.entries(data).forEach(([key, item]) => {
-        const firmaImg = item.firma
-          ? `<img src="${item.firma}" style="width:100px; cursor:pointer;" onclick="previewFirma('${item.firma}', '${item.folioReporte}')">`
-          : "N/A";
-
-        trabajosCampoTable.row.add([
-          item.folioReporte || "N/A",
-          item.causaFalla || "N/A",
-          item.responsable || "N/A",
-          item.trabajoRealizado || "N/A",
-          item.fechaAtendido || "N/A",
-          firmaImg,
-        ]);
+    if (municipioSelect && cuadrillaSelect) {
+      municipioSelect.value = "ESCOBEDO";
+      municipioSelect.dispatchEvent(new Event("change"));
+  
+      // Espera a que las opciones de cuadrilla se carguen
+      setTimeout(() => {
+        cuadrillaSelect.value = "Cuad1";
+        cuadrillaSelect.dispatchEvent(new Event("change"));
+      }, 500);
+    }
+  
+    // Asegurar inicialización de DataTable
+    if (!$.fn.DataTable.isDataTable('#cuadrillaStockTable')) {
+      $('#cuadrillaStockTable').DataTable({
+        responsive: true,
+        columns: [
+          { title: "ID" },
+          { title: "Material" },
+          { title: "Stock Disponible" },
+          { title: "Usado" },
+          { title: "Fecha" }
+        ],
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+        }
       });
-    } else {
-      console.warn("🚫 No data found in WorkDone bucket");
     }
-
-    trabajosCampoTable.draw();
-  }, (error) => {
-    console.error("🚫 Firebase read error:", error);
-  });
-}
-
-  
-  // Preview function
-  function previewFirma(url, folioReporte) {
-    const modalHtml = `
-      <div id="firmaModal" class="modal" style="right:0; display:block;">
-        <div class="modal-content">
-          <span class="close" onclick="closeFirmaModal()">&times;</span>
-          <h2>Firma de ${folioReporte}</h2>
-          <img src="${url}" style="width:100%; height:auto;" />
-        </div>
-      </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', modalHtml);
   }
-  
-  function closeFirmaModal() {
-    document.getElementById('firmaModal').remove();
-  }
-  
-  // Trigger the Data load explicitly
-  $(".sidebar-link.trabajos-campo").click(() => {
-    $(".main-container").hide();
-    $("#trabajos-campo").show();
-    loadTrabajosCampoData();
-  });
-  
   </script>
-<script>
-  // This function sets the iframe’s height = the scrollHeight of its content
-  function autoResizeCensoFrame() {
-    const iframe = document.getElementById('monitorCensoFrame');
-    if (iframe && iframe.contentWindow) {
-      const body = iframe.contentWindow.document.body;
-      const html = iframe.contentWindow.document.documentElement;
-      // get the full height
-      const newHeight = Math.max(
-        body.scrollHeight,
-        body.offsetHeight,
-        html.clientHeight,
-        html.scrollHeight,
-        html.offsetHeight
-      );
-      iframe.style.height = newHeight + 'px';
-    }
-  }
+  
+  
 
-  window.addEventListener('DOMContentLoaded', function() {
-    const iframe = document.getElementById('monitorCensoFrame');
-    // Whenever the iframe finishes loading, recalc the height
-    iframe.addEventListener('load', function() {
-      autoResizeCensoFrame();
-    });
-  });
-</script>
-<script>
-  // Some globals for pagination
-  let allEvidencias = [];
-  let currentPage = 1;
-  const pageSize = 4;
 
-function renderGallery() {
-  const combinedGallery = document.getElementById("combinedGallery");
-  const searchInput = document.getElementById("searchEvidencia");
-  const paginationDiv = document.getElementById("paginationControls");
-  //const filtered = allEvidencias.filter(...);
 
-  // 1) Filter the array
-  const searchText = searchInput.value.trim().toLowerCase();
-  const filtered = allEvidencias.filter(ev => {
-    // We can match on folio or any other property
-    const folioStr = (ev.folio || "").toLowerCase();
-    return folioStr.includes(searchText);
-  });
 
-  // 2) Compute total pages
-  const totalPages = Math.ceil(filtered.length / pageSize);
-  if (currentPage > totalPages) currentPage = totalPages || 1; 
-
-  // 3) Slice out the items for the current page
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const pageItems = filtered.slice(startIndex, endIndex);
-
-  // 4) Render the items
-  combinedGallery.innerHTML = ""; // Clear old
-  pageItems.forEach(item => {
-    const folio = item.folio;
-    const initUrl = item.inicialUrl;
-    const finalUrl = item.finalUrl;
-    const initTime = item.inicialTimestamp; 
-    const finalTime = item.finalTimestamp; 
-
-    // Build two cards side by side for inicial & final
-    const cardHtml = `
-      <div style="display: flex; gap: 16px; margin-bottom: 20px;">
-        <!-- INICIAL PIC -->
-        <div class="gallery-card" style="width: 45%;" onclick="showFullImage('${initUrl}')">
-          <img src="${initUrl}" alt="Folio ${folio} - Inicial" />
-          <div class="gallery-info">
-            <p><strong>Folio:</strong> ${folio}</p>
-            <p><strong>FechaAt:</strong> ${initTime}</p>
-            <p><strong>Tipo:</strong> Inicial</p>
-          </div>
-        </div>
-        
-        <!-- FINAL PIC -->
-        <div class="gallery-card" style="width: 45%;" onclick="showFullImage('${finalUrl}')">
-          <img src="${finalUrl}" alt="Folio ${folio} - Final" />
-          <div class="gallery-info">
-            <p><strong>Folio:</strong> ${folio}</p>
-            <p><strong>FechaAt:</strong> ${finalTime}</p>
-            <p><strong>Tipo:</strong> Final</p>
-          </div>
-        </div>
-      </div>
-    `;
-    combinedGallery.insertAdjacentHTML("beforeend", cardHtml);
-  });
-
-  // 5) Render pagination controls
-  let paginationHtml = "";
-  if (totalPages > 1) {
-    // Prev button
-    paginationHtml += `<button onclick="gotoPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>Prev</button>`;
-    
-    // Page numbers
-    for (let p = 1; p <= totalPages; p++) {
-      paginationHtml += `<button onclick="gotoPage(${p})" ${p === currentPage ? 'style="font-weight:bold;"' : ''}>${p}</button>`;
-    }
-    
-    // Next button
-    paginationHtml += `<button onclick="gotoPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>`;
-  }
-  paginationDiv.innerHTML = paginationHtml;
-}
-
-// A simple helper to go to a different page
-function gotoPage(pageNumber) {
-  currentPage = pageNumber;
-  renderGallery(); 
-}
-
-</script>
 <script>
   function generatePDF(materialList) {
     if (!materialList || materialList.length === 0) {
@@ -3138,43 +3218,31 @@ function gotoPage(pageNumber) {
   });
   </script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Example: if you want a link to open the "monitor-cuadrillas" tab
-    let monitorCuadrillasLink = document.querySelector('.sidebar-link.monitor-cuadrillas');
-    if (monitorCuadrillasLink) {
-      monitorCuadrillasLink.addEventListener('click', function() {
-        openTab('monitor-cuadrillas'); 
-      });
-    }
+ 
+  function openTab(tabId) {
+  document.querySelectorAll('.main-container, .tab-content').forEach(tab => {
+    tab.style.display = 'none';
   });
 
-  function openTab(tabId) {
-    console.log("Opening tab:", tabId);
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.classList.remove('is-active');
+  });
 
-    // 1) Hide all .main-container elements
-    document.querySelectorAll('.main-container').forEach(container => {
-      container.style.display = 'none';
-    });
-
-    // 2) Remove active class from all sidebar links
-    document.querySelectorAll('.sidebar-link').forEach(link => {
-      link.classList.remove('is-active');
-    });
-
-    // 3) Show the .[tabId]-container (like .streaming-container if tabId="streaming")
-    const tabToShow = document.querySelector(`.${tabId}-container`);
-    if (tabToShow) {
-      tabToShow.style.display = 'block';
-    } else {
-      console.error(`Tab container for ${tabId} not found!`);
-    }
-
-    // 4) Mark the matching link as active, if it exists
-    const activeTabLink = document.querySelector(`.sidebar-link.${tabId}`);
-    if (activeTabLink) {
-      activeTabLink.classList.add('is-active');
-    }
+  const selectedTab = document.getElementById(tabId);
+  if (selectedTab) {
+    selectedTab.style.display = 'block';
   }
+
+  const matchingLink = document.querySelector(`.sidebar-link.${tabId}`);
+  if (matchingLink) {
+    matchingLink.classList.add('is-active');
+  }
+}
+
+
+
+
+
 </script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -3370,26 +3438,75 @@ updateTable();
     });
  
 </script>
+
+
+
+  
+
+  
+
 <script>
-  function openTab(tabId) {
-    // Hide all tab contents
-    document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.style.display = 'none';
+  $(document).ready(function () {
+    const salidasRef = firebase.database().ref("Cuadrilla_Material");
+    const materialesRef = firebase.database().ref("ADMIN_MATERIAL");
+  
+    Promise.all([
+      salidasRef.once("value"),
+      materialesRef.once("value")
+    ]).then(([salidasSnap, materialesSnap]) => {
+      const salidas = salidasSnap.val() || {};
+      const materiales = materialesSnap.val() || {};
+  
+      // Convertir materiales en mapa ID => datos
+      const materialesPorID = {};
+      for (let key in materiales) {
+        const mat = materiales[key];
+        materialesPorID[String(mat.ID)] = mat;
+      }
+  
+      const data = [];
+  
+      for (let key in salidas) {
+        const item = salidas[key];
+        const matMatch = materialesPorID[String(item.codigo_recib)];
+  
+        data.push({
+  CodMat: cod,
+  Descripcion: match?.Descripcion || "N/A",
+  Cantidad: item.CantidadRecib || "N/A",
+  UM: match?.UM || "N/A",
+  Fecha: item.FechaRecib || "N/A",
+  Cuadrilla: item.CuadrillaName || "N/A",
+  FolioRecep: item.folio_recep || "N/A"
+});
+
+      }
+  
+      $('#salidasMatTable').DataTable({
+        data: data,
+        columns: [
+        { data: 'CodMat' },
+        { data: 'Descripcion' },
+        { data: 'Cantidad' },
+        { data: 'UM' },
+        { data: 'Fecha' },
+        { data: 'Cuadrilla' },
+        { data: 'FolioRecep' }
+   ]
+  ,
+        responsive: true,
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+        }
+      });
     });
+  });
+  </script>
+  
 
-    // Remove active class from all sidebar links
-    document.querySelectorAll('.sidebar-link').forEach(link => {
-        link.classList.remove('is-active');
-    });
-
-    // Show the selected tab
-    document.getElementById(tabId).style.display = 'block';
-
-    // Highlight the clicked tab in the sidebar
-    document.querySelector(`.sidebar-link[href="#${tabId}"]`)?.classList.add('is-active');
-}
-
-</script>
+ 
+    
+    
 <script>
   // Load Evidencias functionality from v3
   document.querySelector('.evidencias-tab').addEventListener('click', () => {
@@ -3418,6 +3535,7 @@ updateTable();
   });
 </script>
 <!-- Script conexion firebase -->
+ 
 <script>
     // Firebase configuration and initialization
 const firebaseConfig = {
@@ -3446,32 +3564,117 @@ const firebaseConfig = {
   $(document).ready(function () {
     const dbRef = firebase.database().ref("ADMIN_MATERIAL");
   
-    // Initialize DataTable
-    const table = $("#almacenTable").DataTable({
-      responsive: true,
-      autoWidth: false,
-      columns: [
-        { title: "CodMat" },
-        { title: "Descripcion" },
-        { title: "UM" },
-        { title: "CantidadActual" },
-        // { title: "FechaReg" },
-        // { title: "CantidadReg" },
-        // { title: "Extra" },
-        
-      ],
-      language: {
-        search: "Buscar:",
-        lengthMenu: "Mostrar _MENU_ registros",
-        info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-        paginate: {
-          first: "Primero",
-          last: "Último",
-          next: "Siguiente",
-          previous: "Anterior",
-        },
-      },
+    // Agrega fila de filtros arriba del thead
+// Agrega fila de filtros antes del thead
+
+// Agrega la fila de filtros como una segunda fila en thead
+//$('#almacenTable thead').clone(true).addClass('filters').appendTo('#almacenTable');
+
+$('#almacenTable thead').before('<thead class="filters"><tr></tr></thead>');
+$('#almacenTable thead.filters tr').html(
+  $('#almacenTable thead:last tr th').map(function () {
+    const title = $(this).text();
+    return `<th><input type="text" placeholder="🔍 ${title}" /></th>`;
+  }).get().join('')
+);
+
+
+
+
+
+const table = $("#almacenTable").DataTable({
+  data: [], // los datos serán cargados después
+  columns: [
+  { title: "CodMat", data: "ID" },
+  { title: "Descripcion", data: "Descripcion" },
+  { title: "UM", data: "UM" },
+  {
+  title: "CantidadActual",
+  data: "CantidadActual",
+  render: function (data, type, row) {
+    const capacidadMaxima = 1000; // Puedes ajustar por producto si deseas
+    const cantidad = parseFloat(data);
+    const porcentaje = Math.min((cantidad / capacidadMaxima) * 100, 100);
+
+    let color = '#28a745'; // Verde por defecto
+    if (porcentaje < 30) {
+      color = '#dc3545'; // Rojo
+    } else if (porcentaje < 60) {
+      color = '#ffc107'; // Amarillo
+    }
+
+    return `
+      <div style="display: flex; flex-direction: column; gap: 4px; width: 100%;">
+        <div style="font-size: 18px; font-weight: bold; color: ${color};">
+          ${cantidad} (${Math.round(porcentaje)}%) ${porcentaje < 30 ? ' - Bajo Stock' : ''}
+        </div>
+        <div style="height: 10px; background-color: #2c2c2c; border-radius: 5px; overflow: hidden;">
+          <div style="
+            width: ${porcentaje}%;
+            height: 100%;
+            background-color: ${color};
+            border-radius: 5px;
+            transition: width 1s ease;
+          "></div>
+        </div>
+      </div>
+    `;
+  }
+}
+
+
+
+],
+  orderCellsTop: true,
+  fixedHeader: true,
+  responsive: true,
+
+  initComplete: function () {
+    const api = this.api();
+    api.columns().eq(0).each(function (colIdx) {
+      const cell = $('.filters th').eq(colIdx).empty();
+      const title = $(api.column(colIdx).header()).text();
+      $('<input type="text" placeholder="🔍 ' + title + '" />')
+        .appendTo(cell)
+        .on('keyup change', function () {
+          api.column(colIdx)
+            .search(this.value)
+            .draw();
+        });
     });
+  },
+
+  drawCallback: function () {
+    $('#almacenTable tbody tr').each(function () {
+      const $row = $(this);
+      const cantidadCell = $row.find('td').eq(3); // 4ta columna = CantidadActual
+      const cantidad = parseFloat(cantidadCell.text());
+
+      const capacidadMaxima = 1000; // Ajusta este valor si tienes un campo real
+
+      if (!isNaN(cantidad)) {
+        const porcentaje = (cantidad / capacidadMaxima) * 100;
+
+        if (porcentaje < 30) {
+          cantidadCell.css({
+            backgroundColor: '#420000',
+            color: '#ff7070',
+            fontWeight: 'bold'
+          });
+          cantidadCell.attr('title', 'Stock bajo');
+        } else {
+          cantidadCell.removeAttr('style').removeAttr('title');
+        }
+      }
+    });
+  },
+
+  language: {
+    url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+  }
+});
+
+
   
     // Fetch data from Firebase
     dbRef.on("value", (snapshot) => {
@@ -3482,16 +3685,17 @@ const firebaseConfig = {
       if (data) {
         Object.keys(data).forEach((key) => {
           const item = data[key];
-          table.row.add([
-            item.ID || "N/A",
-            item.Descripcion || "N/A",
-            item.UM || "N/A",
-            item.CantidadActual || "N/A",
-            // item.FechaReg || "N/A",
-            // item.CantidadReg || "0",
-            // item.Extra || "0",
-           
-          ]);
+          const parsedData = [];
+
+if (data) {
+  Object.keys(data).forEach((key) => {
+    const item = data[key];
+    parsedData.push(item);
+  });
+}
+
+table.clear().rows.add(parsedData).draw();
+
         });
       } else {
         console.warn("No data found in ADMIN_MATERIAL");
@@ -3557,7 +3761,11 @@ const firebaseConfig = {
         $(".almacen-container").show(); // Show Almacen content
       } else if ($(this).hasClass("salidas-mat")) {
         $(".salidas-mat-container").show(); // Show Salidas Mat content
-      }
+      } if ($(this).hasClass("stock-cuadrillas")) {
+  console.log("✅ Mostrando tab: Stock Cuadrillas");
+  $("#stock-cuadrillas").css("display", "block").css("border").css("background-color", "#1f1d2b");
+}
+      
     });
     ///
 
@@ -3611,12 +3819,13 @@ $("#confirmUpdateStock").click(function() {
       responsive: true,
       autoWidth: false,
       columns: [
-        { title: "CodMat" },
-        { title: "CantidadRecib" },
-        { title: "FechaRecib" },
-        { title: "CuadrillaName" },
-        { title: "FolioRecep" },
-        //{ title: "Unidad" },
+    { title: "CodMat" },
+    { title: "Descripcion" },
+    { title: "CantRecib" },
+    { title: "UM" },
+    { title: "FechaRecib" },
+    { title: "Cuadrilla" },
+    { title: "FolioRecep" }
       ],
       language: {
         search: "Buscar:",
@@ -3632,29 +3841,27 @@ $("#confirmUpdateStock").click(function() {
     });
   
     // Fetch data from Firebase for Salidas Mat
-    dbRefSalidas.on("value", (snapshot) => {
-      const data = snapshot.val();
-      console.log("Fetched Salidas Mat data:", data);
-      tableSalidas.clear();
-  
-      if (data) {
-        Object.keys(data).forEach((key) => {
-          const item = data[key];
-          tableSalidas.row.add([
-            item.codigo_recib || "N/A",
-            item.CantidadRecib || "N/A",
-            item.FechaRecib || "N/A",
-            item.CuadrillaName || "N/A",
-            item.folio_recep || "0",
-           // item.Unidad || "N/A",
-          ]);
-        });
-      } else {
-        console.warn("No data found in SALIDAS_MATERIAL");
-      }
-  
-      tableSalidas.draw();
+dbRefSalidas.on("value", (snapshot) => {
+  const data = snapshot.val();
+  tableSalidas.clear();
+
+  if (data) {
+    Object.keys(data).forEach((key) => {
+      const item = data[key];
+      tableSalidas.row.add([
+        item.codigo_recib || "N/A",
+        item.Descripcion || "N/A",
+        item.CantidadRecib || "N/A",
+        item.FechaRecib || "N/A",
+        item.CuadrillaName || "N/A",
+        item.folio_recep || "N/A",
+        item.UM || "N/A"
+      ]);
     });
+  }
+
+  tableSalidas.draw();
+});
   });
 
   //CAMPO REPORTES
@@ -4625,5 +4832,173 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-</script></body>
+</script>
+
+
+<script>
+ $(document).ready(function () {
+  const salidasRef = firebase.database().ref("Cuadrilla_Material");
+  const materialesRef = firebase.database().ref("ADMIN_MATERIAL");
+
+  Promise.all([
+    salidasRef.once("value"),
+    materialesRef.once("value")
+  ]).then(([salidasSnap, materialesSnap]) => {
+    const salidas = salidasSnap.val() || {};
+    const materiales = materialesSnap.val() || {};
+
+    const materialArray = Object.values(materiales);
+    const data = [];
+
+    for (const key in salidas) {
+      const item = salidas[key];
+      const cod = String(item.codigo_recib).trim();
+
+      const match = materialArray.find(m => String(m.ID).trim() === cod);
+
+      console.log(`[MATCH OK] codigo_recib="${cod}" → "${match?.Descripcion}"`);
+
+      data.push({
+        CodMat: cod,
+        Descripcion: match?.Descripcion || "N/A",
+        Cantidad: item.CantidadRecib || "N/A",
+        UM: match?.UM || "N/A",
+        Fecha: item.FechaRecib || "N/A",
+        Cuadrilla: item.CuadrillaName || "N/A",
+        FolioRecep: item.folio_recep || "N/A"
+      });
+    }
+
+    // ✅ Destruir instancia previa si ya existe
+    if ($.fn.DataTable.isDataTable('#salidasMatTable')) {
+      $('#salidasMatTable').DataTable().clear().destroy();
+    }
+
+    /// Crea la fila de filtros desde cero
+let filterRow = $('<tr class="filters"></tr>');
+$('#salidasMatTable thead th').each(function () {
+  const title = $(this).text();
+  filterRow.append(`<th><input type="text" placeholder="🔍 ${title}" /></th>`);
+});
+$('#salidasMatTable thead').append(filterRow);
+
+
+    // ✅ Agrega una fila para los filtros antes de inicializar la tabla
+//$('#salidasMatTable thead').clone(true).addClass('filters').appendTo('#salidasMatTable');
+
+    // ✅ Crear nueva instancia con los datos correctos
+    $('#salidasMatTable').DataTable({
+      data: data,
+      columns: [
+        { data: 'CodMat' },
+        { data: 'Descripcion' },
+        { data: 'Cantidad' },
+        { data: 'UM' },
+        { data: 'Fecha' },
+        { data: 'Cuadrilla' },
+        { data: 'FolioRecep' }
+      ],
+      orderCellsTop: true,
+      fixedHeader: true,
+      responsive: true,
+      initComplete: function () {
+  const api = this.api();
+  api.columns().eq(0).each(function (colIdx) {
+    const cell = $('#salidasMatTable thead tr.filters th').eq(colIdx).empty();
+    const title = $(api.column(colIdx).header()).text();
+    const input = $('<input type="text" placeholder="🔍 ' + title + '" />')
+      .css('width', '100%') // ✅ Solución correcta
+      .appendTo(cell)
+      .on('keyup change', function () {
+        api.column(colIdx).search(this.value).draw();
+      });
+  });
+},
+     language: {
+     url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+    }
+  });
+   
+
+  });
+});
+
+const municipioCuadrillas = {
+"ESCOBEDO": ["Cuad1_ESC", "Cuad2_ESC", "Cuad1", "Cuad2"],
+"LOS HERRERAS": ["Cuad1_HRR", "Cuad2_HRR", "Cuad3"],
+"CIENEGA DE FLORES": ["Cuad1_CNF", "Cuad4"]
+};
+
+$("#selectMunicipioStock").on("change", function () {
+const municipio = $(this).val();
+const cuadrillaSelect = $("#selectCuadrillaStock");
+cuadrillaSelect.empty().append(`<option value="">Seleccione Cuadrilla</option>`);
+(municipioCuadrillas[municipio] || []).forEach(c => {
+  cuadrillaSelect.append(`<option value="${c}">${c}</option>`);
+});
+});
+
+$("#selectCuadrillaStock").on("change", function () {
+  const cuadrilla = $(this).val();
+  if (!cuadrilla) return;
+
+  const stockRef = firebase.database().ref(`StockCuadrillas/${cuadrilla}`);
+  stockRef.once("value", (snapshot) => {
+    const data = snapshot.val();
+
+    // Initialize only if needed
+    let table;
+    if (!$.fn.DataTable.isDataTable('#cuadrillaStockTable')) {
+      table = $('#cuadrillaStockTable').DataTable({
+        responsive: true,
+        columns: [
+  { data: "materialID", title: "ID" },
+  { data: "descripcion", title: "Material" },
+  { data: "remainingStock", title: "Stock Disponible" },
+  { data: "usedQuantity", title: "Usado" },
+  { data: "timestamp", title: "Fecha" }
+]
+,
+        rowGroup: {
+    dataSrc: 'descripcion' // Agrupa por ID
+  },
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+        }
+      });
+    } else {
+      table = $('#cuadrillaStockTable').DataTable();
+    }
+
+    table.clear();
+
+    if (data) {
+      Object.values(data).forEach(entry => {
+  table.row.add({
+    materialID: (entry.materialID || "N/A").toString(),
+    descripcion: (entry.descripcion || "N/A").toUpperCase(),
+    remainingStock: entry.remainingStock || "0",
+    usedQuantity: entry.usedQuantity || "0",
+    timestamp: entry.timestamp || "-"
+  });
+});
+
+    }
+
+    table.draw();
+  });
+});
+
+
+//$(document).ready(function () {
+ 
+//});
+
+  </script>
+
+
+  
+
+
+</body>
 </html>
